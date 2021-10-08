@@ -1,0 +1,99 @@
+.aws-sld {
+    --fall-animation-duration: 100ms;
+    --fall-animation-angle: 16deg;
+    --fall-scaling-in-from: 0.9;
+
+}
+
+.button-slider {
+    margin-bottom: -20rem;
+}
+
+.facebook-button {
+
+    background-color: #3b5998;
+    border: 1px solid #3b5998 !important;
+    text-transform: uppercase;
+    padding: 15px 40px;
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+
+    i {
+        margin-right: 10px;
+    }
+}
+
+.facebook-button:hover {
+    background-color: #1D3C78 !important;
+    border: 1px solid #1D3C78 !important;
+}
+
+.google-button {
+    color: #000;
+    background-color: #FFF;
+    border: 1px solid #FFF !important;
+    text-transform: uppercase;
+    padding: 13px 20px !important;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+
+    i {
+        margin-right: 10px;
+    }
+}
+
+.google-button:hover {
+    color: #000 !important;
+    background-color: #CCC !important;
+    border: 1px solid #CCC !important;
+}
+
+@media screen and (max-width: 991px) { //Tablets Grandes
+
+}
+
+@media screen and (max-width: 770px) { //Tablets Medianas
+
+    .button-slider {
+        margin-bottom: -20rem;
+    }
+
+}
+
+@media screen and (max-width: 599px) {
+
+    .button-slider {
+        margin-bottom: -7rem;
+    }
+
+}
+
+@media screen and (max-width: 479px) { //Smartphones
+
+    .button-slider {
+        margin-bottom: -5rem;
+    }
+
+}
+
+@media screen and (max-height: 500px) { //Smartphones
+
+    .login-panel {
+        margin-top: 5px !important;
+    }
+
+}
+
+.cardif {
+    transition: all 200ms ease-out;
+}
+
+.cardif:hover {
+    box-shadow: 0 0 6px rgba(35, 173, 278, 1);
+}

@@ -1,0 +1,23 @@
+
+.cardif {
+transition: all 200ms ease-out;
+}
+.cardif:hover {
+box-shadow: 0 0 6px rgba(35, 173, 278, 1);
+}
+
+.btn-model {
+      border-radius: 50% !important;
+      position: fixed !important;
+      top:10 !important;
+      right: 90 !important;
+      width: 75px !important;
+      height: 75px !important;
+	}
+.btn-model:hover {
+    background:0 0 6px rgba(35, 173, 278, 1) !important;
+
+    .p-c {
+        transform: rotate(360deg) !important;
+    }
+}

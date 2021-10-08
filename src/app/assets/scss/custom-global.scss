@@ -1,0 +1,41 @@
+//Custom BG
+
+.bg-dark {
+    background-color: #3E4754;
+}
+
+.bg-light {
+    background-color: #F2F4F6;
+}
+
+.bg-dark-intense {
+    background-color: #293241;
+}
+
+.bg-light-intense {
+    background-color: #ffffff;
+}
+
+.color-danger {
+    color: #F48FB1;
+}
+
+.color-success {
+    color: #C5E1A5;
+}
+
+//Inputs
+
+.required-input {
+    color: #F48FB1;
+}
+
+//Delete buttons of input type number
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }

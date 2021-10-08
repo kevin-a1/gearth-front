@@ -1,0 +1,37 @@
+.bpmn-icon-start-event-none {
+    color: green !important;
+}
+
+.bpmn-icon-intermediate-event-none {
+    color: blue !important;
+}
+
+.bpmn-icon-end-event-none {
+    color: red !important;
+}
+
+.bpmn-icon-gateway-none {
+    color: #000 !important;
+}
+
+.bpmn-icon-task {
+    color: orange !important;
+}
+
+/* Elements BPMN */
+
+.djs-children>.djs-group>.djs-element>.djs-visual>rect {
+    fill: orange !important;
+}
+
+circle {
+    fill: greenyellow !important;
+}
+
+#Event_08022ne > circle {
+    fill: orange !important;
+}
+
+polygon {
+    fill: yellow !important;
+}
