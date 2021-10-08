@@ -16,6 +16,5 @@ export default combineReducers ({
     RepositoryState,
     ModelState,
     SocialNetworkState,
-    RolNavigationState
+    RolNavigationState 
 });
-
