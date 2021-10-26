@@ -257,12 +257,12 @@ export const deleteModel = async (modelId, userId, token) => {
     }
   );
 
-  let response_neo;
+ 
   const headers = {
     Authorization: "Bearer " + token,
   };
   if (response_main.status === 200) {
-    response_neo = await axios.delete(
+    await axios.delete(
       `${urls.URL_BASE}${urls.urlDeleteModelNeo4j}?modelId=${modelId}&userId=${userId}`,
       {
         headers,
@@ -335,13 +335,13 @@ export const updateRelationshipsFromSubsystem = (subsystemId) => {
   }
 
   return
-
+/*
   store.dispatch({
     type: actionsModel.UPDATE_RELATIONSHIPS_FROM_SUBSYSTEM,
     payload: {
       newModelStore: modelStore,
     },
-  });
+  });*/
 };
 
 export const getAllRelationships = () => {

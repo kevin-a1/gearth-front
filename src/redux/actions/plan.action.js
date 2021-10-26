@@ -37,7 +37,7 @@ export const getPlans = (history) => async (dispatch,getState) =>{
                 })
             );
         }
-        else if(status == 403){
+        else if(status === 403){
             console.log("FORBIDEEEN");
             history.push('/access');
         }
@@ -61,9 +61,7 @@ export const getPlans = (history) => async (dispatch,getState) =>{
 export const createPlan = (data,history) =>async (dispatch,getState)=>{
 
     const token = getState()?.LoginState?.data?.access_token;
-    const dataCreate = {
 
-    }
 
     dispatch(setResetCreatePlanAction());
     dispatch(setLoadingCreatePlanAction(false));

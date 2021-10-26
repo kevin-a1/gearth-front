@@ -37,7 +37,7 @@ export const getRepositories = (history) => async (dispatch,getState) =>{
                 })
             );
         }
-        else if(status == 403){
+        else if(status === 403){
             console.log("FORBIDEEEN");
             history.push('/access');
         }

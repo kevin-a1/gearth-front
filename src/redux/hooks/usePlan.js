@@ -1,6 +1,6 @@
 import {useDispatch,useSelector} from 'react-redux';
 import {getPlans,createPlan} from '../actions/plan.action';
-import { useLocation,useHistory } from 'react-router-dom';
+import {useHistory } from 'react-router-dom';
 
 export const usePlan = () =>{
     const history = useHistory();

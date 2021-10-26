@@ -43,13 +43,13 @@ export const getChannels = (modelId, token) => async (dispatch, getState) => {
   }
 };
 
-export const deleteChannel = (channelId, token) => async (
+export const deleteChannel = (channelId, token, rolNavState, modelId) => async (
   dispatch,
   getState
 ) => {
   try {
     const { status } = await axios.delete(
-      `${URL_BASE_SOCIAL_NETWORK}${urlChannels}?channel_id=${channelId}`,
+      `${URL_BASE_SOCIAL_NETWORK}${urlChannels}?model_id=${modelId}&channel_id=${channelId}&rol_nav_state=${rolNavState}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -121,15 +121,16 @@ const getIndex = (channels, id) => {
     return channels.findIndex(c => c.id = id);
 }
 
-export const updateChannel = (channel, token) => async (dispatch, getState) => {
+export const updateChannel = (channel, token, rolNavState) => async (dispatch, getState) => {
     try {
-      const { data, status } = await axios.put(
+      const {  status } = await axios.put(
         `${URL_BASE_SOCIAL_NETWORK}${urlChannels}`,
         {
           id: channel.id,
           name: channel.name,
           description: channel.description,
           model_id: channel.model_id,
+          rol_nav_state: rolNavState
         },
         {
           headers: {
@@ -141,6 +142,7 @@ export const updateChannel = (channel, token) => async (dispatch, getState) => {
       if (status === 200) {
         const index = getIndex(_channels, channel.id)
         _channels[index] = channel
+        
         dispatch(setChannels(_channels));
         dispatch(
           setCreateChannelErrorAction({

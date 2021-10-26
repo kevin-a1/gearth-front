@@ -1,6 +1,6 @@
 import {useDispatch,useSelector} from 'react-redux';
 
-import { useLocation,useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { createRepository, getRepositories } from '../actions/repository.action';
 
 export const useRepository = () =>{

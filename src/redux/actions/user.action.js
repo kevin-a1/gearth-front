@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import api from "../../api";
+import axios from "axios";
 import * as urls from  '../../api/urls';
 
 export const setLoadingLoginAction = createAction('SET_LOADING_LOGIN_ACTION');
@@ -77,3 +78,34 @@ export const finalizarSesion = (props) =>async (dispatch,getState)=>{
     }
 
 };
+
+export const registrarUsuario = (data) => {
+
+    const USER_DATA = {
+        username: data?.username,
+        names: data?.names,
+        last_names: data?.lnames,
+        identification: data?.id,
+        gender: data?.gender,
+        password: data?.password,
+        description: data?.desc,
+        team_name: data?.team,
+        plan_id: 1,
+        role_id: 1,
+    }
+
+    console.log(USER_DATA);
+
+    return new Promise(function (resolve, reject) {
+
+        axios.post(`${urls.URL_BASE}${urls.urlRegister}`, USER_DATA).then(
+            response => {
+                var result = response.data;
+                resolve(result);
+            }, error => {
+                reject(error);
+            }
+        );
+
+    });
+}

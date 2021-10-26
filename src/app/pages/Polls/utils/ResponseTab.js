@@ -28,7 +28,7 @@ function ResponseTab(props) {
   useEffect(() => {
     if(props.formData){
      // console.log(props.formData.questions.length);
-      setQuestions(props.formData.questions)
+      setQuestions(props.formData.json_body.questions)
       setFormData(props.formData)
       }
       var formId = props.formId

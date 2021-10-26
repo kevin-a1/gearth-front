@@ -60,7 +60,7 @@ const EditPoll = () => {
     const poll = location.state?.poll;
 
     const clipToClipboard = ()=>{
-      navigator.clipboard.writeText(window.location.origin + "/s/" + formDeatils._id)
+      navigator.clipboard.writeText(window.location.origin + "/s/" + formDeatils.id)
       handleClickOfAlert();
       handleClose();
     };
@@ -92,13 +92,14 @@ const EditPoll = () => {
       setOpen(false);
     };
 
-
     useEffect(() => {
-      var formId = poll.id;
+      let dat = poll[0];
+      var formId = dat.id;
       if(formId !== undefined){
         setFormDetails(poll)
+        console.log(formDeatils);
       }
-    },[poll.id]);
+    },[poll]);
 
 
     const optionsTemplate = () => {

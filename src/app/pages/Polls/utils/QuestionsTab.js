@@ -11,6 +11,9 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Radio from '@material-ui/core/Radio';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import AccordionActions from '@material-ui/core/AccordionActions';
@@ -24,26 +27,33 @@ function QuestionsTab(props){
     const [imageContextData, setImageContextData] = useState({question: null, option: null});
     const [formData, setFormData] = useState({});
     const [loadingFormData, setLoadingFormData] = useState(true);
+    const [open, setOpen] = useState(false);
 
     useEffect(()=>{
-      if(props.formData.questions !== undefined){
-        //console.log(props.formData.questions.length);
-        if(props.formData.questions.length === 0){
+      let data = props.formData.json_body;
+      console.log(data);
+      if(data !== undefined){
+        if(props.formData.json_body.questions.length === 0){
           setQuestions([{questionText: "Question", options : [{optionText: "Option 1"}], open: false}]);
         } else{
-          setQuestions(props.formData.questions)
+          setQuestions(props.formData.json_body.questions)
         }
         setLoadingFormData(false)
       }
       setFormData(props.formData)
+
     }, [props.formData])
 
     function saveQuestions(){
+      let date = new Date().getTime();
       console.log("auto saving questions initiated");
       var data = {
-        formId: formData._id,
+        formId: formData.id,
         name: formData.name,
         description: formData.description,
+        processID:formData.processID,
+        createdAt:formData.createdAt,
+        updateAt:date,
         questions: questions
       }
       console.log(data);
@@ -82,10 +92,26 @@ function QuestionsTab(props){
       }
     };
 
-    function addMoreQuestionField(){
-      expandCloseAll(); //I AM GOD
+    function addQuestionClosed() {
+      setOpen(false);
+      expandCloseAll();
+      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true, type:"closed", subsistemaId:1, variableId:1}]);
+    };
 
-      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true}]);
+    function addQuestionMultiple(){
+      setOpen(false);
+      expandCloseAll();
+      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true, type:"multiple", subsistemaId:1, variableId:1}]);
+    };
+
+    function addQuestionOpen(){
+      setOpen(false);
+      expandCloseAll();
+      setQuestions(questions=> [...questions, {questionText: "Question", options : [], open: true, type:"open", subsistemaId:1, variableId:1}]);
+    };
+
+    function addMoreQuestionField(){
+      setOpen(true);
     }
 
     function copyQuestion(i){
@@ -112,6 +138,10 @@ function QuestionsTab(props){
 
     const handleImagePopupOpen = () => {
       setOpenUploadImagePop(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
     };
 
 
@@ -149,7 +179,6 @@ function QuestionsTab(props){
     function handleOptionValue(text,i, j){
       var optionsOfQuestion = [...questions];
       optionsOfQuestion[i].options[j].optionText = text;
-      //newMembersEmail[i]= email;
       setQuestions(optionsOfQuestion);
     };
 
@@ -194,7 +223,6 @@ function QuestionsTab(props){
       } else{
         console.log("Max  5 options ");
       }
-      //console.log(optionsOfQuestion);
       setQuestions(optionsOfQuestion)
     };
 
@@ -227,6 +255,10 @@ function QuestionsTab(props){
       setQuestions(qs);
     };
 
+    function questionA(){
+      return
+    };
+
     function questionsUI(){
       return  questions.map((ques, i)=> (
         <Draggable key={i} draggableId={i + 'id'} index={i}>
@@ -249,7 +281,11 @@ function QuestionsTab(props){
                                 <img src={ques.questionImage} width="400px" height="auto" /><br></br><br></br>
                               </div>
                             ): "" }
-                            {ques.options.map((op, j)=>(
+                            {ques.type == "open" ?(
+                              <div style={{display:'flex'}}>
+                                <TextField id='standard-basic' label='Enter your answer' variant='standard' />
+                              </div>
+                            ):( ques.options.map((op, j)=>(
                               <div key={j}>
                                 <div style={{display: 'flex'}}>
                                 <FormControlLabel disabled control={<Radio style={{marginRight: '3px', }} />} label={
@@ -264,7 +300,7 @@ function QuestionsTab(props){
                                   ): "" }
                                 </div>
                               </div>
-                            ))}
+                            )))}
                           </div>
                         ): ""}
                       </AccordionSummary>
@@ -303,7 +339,11 @@ function QuestionsTab(props){
                           ): ""}
                         </div>
                         <div style={{width: '100%'}}>
-                          {ques.options.map((op, j)=>(
+                          {ques.type == "open" ?(
+                            <div style={{display:'flex', flexDirection:'row', marginLeft:'-12.5px', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px'}}>
+                              <TextField id='standard-basic' label='Enter your answer' variant='standard' />
+                            </div>
+                          ):(ques.options.map((op, j)=>(
                             <div key={j}>
                               <div style={{display:'flex', flexDirection:'row', marginLeft:'-12.5px', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px'}}>
                                 <Radio disabled />
@@ -338,19 +378,19 @@ function QuestionsTab(props){
                                 ): "" }
                               </div>
                             </div>
-                          ))}
+                          )))}
                         </div>
-                        {ques.options.length < 5 ? (
+                        {ques.type == 'open'?(''):(ques.options.length < 5 ? (
                           <div>
                             <FormControlLabel disabled control={<Radio />} label={
                               <Button size="small" onClick={()=>{addOption(i)}} style={{textTransform: 'none', marginLeft:"-5px"}}>
                                 Add Option
                               </Button> } />
                           </div>
-                        ): ""}
+                        ): "")}
                         <br></br>
                         <br></br>
-                        <Typography variant="body2" style={{color: 'grey'}}>You can add maximum 5 options. If you want to add more then change in settings. Multiple choice single option is availible</Typography>
+                        {ques.type == 'open'?(''):(<Typography variant="body2" style={{color: 'grey'}}>You can add maximum 5 options. If you want to add more then change in settings. Multiple choice single option is availible</Typography>)}
                         </div>
                       </AccordionDetails>
                       <Divider />
@@ -417,7 +457,28 @@ function QuestionsTab(props){
                         )}
                       </Droppable>
                   </DragDropContext>
-                  <div style={{alignItems:'center',}}>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='alert-dialog-title'
+                    aria-describedby='alert-dialog-description' >
+                    <DialogTitle id='alert-dialog-newQ'>{'CHOOSE THE TYPE OF QUESTION'}</DialogTitle>
+                    <DialogActions>
+                      <Button onClick={addQuestionMultiple} disableElevation color="primary">
+                        Multiple
+                      </Button>
+                      <Button onClick={addQuestionClosed} color="primary">
+                        Closed
+                      </Button>
+                      <Button onClick={addQuestionOpen} color="primary">
+                        Open
+                      </Button>
+                      <Button onClick={handleClose} color="primary">
+                        Cancel
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <div style={{alignItems:'center', display:'flex', justifyContent:'center'}}>
                       <Button
                         variant="contained"
                         onClick={addMoreQuestionField}

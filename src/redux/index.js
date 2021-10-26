@@ -5,6 +5,8 @@ import {RepositoryReducer as RepositoryState} from './reducer/repository.reducer
 import {SocialNetworkReducer as SocialNetworkState} from './reducer/social-network.reducer'
 import {ModelReducer as ModelState} from './reducer/model.reducer'
 import {RolNavigationReducer as RolNavigationState} from './reducer/rol-navigation.reducer'
+import {ToolboxReducer as ToolboxState} from './reducer/toolbox.reducer';
+import {SurveyReducer as SurveyState} from './reducer/survey.reducer';
 
 
 import ReducerModel from "./reducer/graph-modelizer.reducer";
@@ -16,5 +18,7 @@ export default combineReducers ({
     RepositoryState,
     ModelState,
     SocialNetworkState,
-    RolNavigationState 
+    RolNavigationState,
+    ToolboxState,
+    SurveyState
 });

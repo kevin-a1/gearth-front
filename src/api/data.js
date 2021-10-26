@@ -1,6 +1,7 @@
 //Assets
 
 const getImageURL = (name) => `https://andres-sapatanga-bucket.s3.amazonaws.com/img/${name}.png`;
+const getImageURL2 = (name) => `https://gearth-app.s3.amazonaws.com/images/${name}.png`;
 
 const img_names = [
     'angular',
@@ -837,7 +838,52 @@ export const modelos = [
         date_create:'21-08-2021 00:00:00',
         date_update:'22-08-2021 00:00:00'
     }
-]
+];
+export const herramientas = [
+    {
+        id:1,
+        name:"Cliente SIG QGIS",
+        category:'Sustentables',
+        hashtag:'Agua, Calidad',
+        img:getImageURL2('qgis'),
+        owner:'Andrés Sapatanga',
+        desc_short:'Manejo responsable de las fuentes hídricas',
+        desc_small:'Al usar este modelo, usted podrá determinar la calidad del agua y cómo esto se ve afectado por otros elementos de las grandes ciudades',
+        qualification:4.5,
+        nro_dowloads:1597,
+        date_create:'21-08-2021 00:00:00',
+        date_update:'22-08-2021 00:00:00',
+        status: 1
+    },
+    {
+        id:2,
+        name:'Modelamiento mediante Grafos',
+        category:'Sustentables',
+        hashtag:'Aire, Calidad',
+        img:getImageURL2('neo4j'),
+        owner:'Juan Paredes',
+        desc_short:'Modelo del diagnóstico de afectación del aire en comunidades del Ecuador',
+        desc_small:'Al usar este modelo, usted podrá determinar la calidad del aire y cómo esto se ve afectado por otros elementos de las grandes ciudades',
+        qualification:4.5,
+        nro_dowloads:100,
+        date_create:'21-08-2021 00:00:00',
+        date_update:'22-08-2021 00:00:00',
+    },
+    {
+        id:3,
+        name:'Visor Web de mapas',
+        category:'Sustentables',
+        hashtag:'aprender',
+        img:getImageURL('node'),
+        owner:'Juan Ramirez',
+        desc_short:'Modelo de manejo sustentable de bosques en Ecuador',
+        desc_small:'Modelo de competencia entre PYMES en donde se veran diferentes puntos de vista entre como avanzan en el dia a dia',
+        qualification:3.5,
+        nro_dowloads:50,
+        date_create:'21-08-2021 00:00:00',
+        date_update:'22-08-2021 00:00:00'
+    }
+];
 
 const moments = [
     {
@@ -1009,181 +1055,112 @@ const moments = [
 ];
 export const polls = [
   {
-    id :1,
-    name:"Pizza's Preparation",
-    description:"Survey on how to prepare homemade pizza",
-    processID:1,
-    stared:false,
-    userId:1,
-    createdAt:"2021-10-01T20:24:37.367Z",
-    updateAt:"2021-10-01T20:24:37.367Z",
-    questions:[
-      {
-        id:1,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Qué ingredientes son los que más utiliza?",
-        options:[
+    id: "616f22ccd4cae83bbd061cfa",
+    name: "Pizza's Preparation Service",
+    description: "Survey on ho to prepare homemade pizza",
+    process_id: 1,
+    created_at: "2021-10-19T19:55:56.450000",
+    updated_at: "2021-10-19T19:55:56.450000",
+    json_body: {
+      questions: [
           {
-            id:1,
-            optionImage:"",
-            optionText:"Peperoni, Piña",
+            id: 1,
+            open: false,
+            type: "multiple",
+            subsistemaId: 1,
+            variableId: 1,
+            questionImage: "",
+            questionText: "¿Qué ingredientes son los que más utiliza?",
+            options: [
+              {
+                id: 1,
+                optionImage: "",
+                optionText: "Peperoni, Piña"
+              },
+              {
+                id: 2,
+                optionImage: "",
+                optionText: "Mortadela, Queso"
+              }
+            ]
           },
           {
-            id:2,
-            optionImage:"",
-            optionText:"Mortadela, Queso",
+            id: 2,
+            open: false,
+            type: "close",
+            subsistemaId: 1,
+            variableId: 1,
+            questionImage: "",
+            questionText: "¿Cuanto tiempo de coccion utiliza?",
+            options: [
+              {
+                id: 1,
+                optionImage: "",
+                optionText: "1-2 hrs"
+              },
+              {
+                id: 2,
+                optionImage: "",
+                optionText: "2-3 hrs"
+              },
+              {
+                id: 3,
+                optionImage: "",
+                optionText: "Otros"
+              }
+            ]
           },
           {
-            id:3,
-            optionImage:"",
-            optionText:"Otros",
+            id: 3,
+            open: false,
+            type: "close",
+            subsistemaId: 1,
+            variableId: 1,
+            questionImage: "",
+            questionText: "¿Qué tipo de pizza de gusta?",
+            options: [
+              {
+                id: 1,
+                optionImage: "",
+                optionText: "Peperoni, Piña"
+              },
+              {
+                id: 2,
+                optionImage: "",
+                optionText: "Mortadela, Queso"
+              },
+              {
+                id: 3,
+                optionImage: "",
+                optionText: "Otros"
+              }
+            ]
+          },
+          {
+            id: 4,
+            open: false,
+            type: "open",
+            subsistemaId: 1,
+            variableId: 1,
+            questionImage: "",
+            questionText: "En cuantas porciones corta a la pizza y de que forma?",
+            options: []
           }
         ]
-      },{
-        id:2,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Cuanto tiempo de coccion utiliza?",
-        options:[
-          {
-            id:1,
-            optionImage:"",
-            optionText:"1-2 hrs",
-          },
-          {
-            id:2,
-            optionImage:"",
-            optionText:"2-3 hrs",
-          },
-          {
-            id:3,
-            optionImage:"",
-            optionText:"Otros",
-          }
-        ]
-      },{
-        id:3,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Qué tipo de pizza de gusta?",
-        options:[
-          {
-            id:1,
-            optionImage:"",
-            optionText:"Peperoni, Piña",
-          },
-          {
-            id:2,
-            optionImage:"",
-            optionText:"Mortadela, Queso",
-          },
-          {
-            id:3,
-            optionImage:"",
-            optionText:"Otros",
-          }
-        ]
-      }
-    ],
-
-  },{
-    id :2,
-    name:"Pizza's Preparation",
-    description:"Survey on how to prepare homemade pizza",
-    processID:1,
-    userId:1,
-    createdAt:"2021-10-01T20:24:37.367Z",
-    updateAt:"2021-10-01T20:24:37.367Z",
-    stared:false,
-    questions:[
-      {
-        id:1,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Qué ingredientes son los que más utiliza?",
-        options:[
-          {
-            id:1,
-            optionsImage:"",
-            optionsText:"Peperoni, Piña",
-          },
-          {
-            id:2,
-            optionsImage:"",
-            optionsText:"Mortadela, Queso",
-          },
-          {
-            id:3,
-            optionsImage:"",
-            optionsText:"Otros",
-          }
-        ]
-      },{
-        id:2,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Qué ingredientes son los que más utiliza?",
-        options:[
-          {
-            id:1,
-            optionsImage:"",
-            optionsText:"Peperoni, Piña",
-          },
-          {
-            id:2,
-            optionsImage:"",
-            optionsText:"Mortadela, Queso",
-          },
-          {
-            id:3,
-            optionsImage:"",
-            optionsText:"Otros",
-          }
-        ]
-      },{
-        id:3,
-        open: false,
-        type: "none",
-        subsistemaId: 1,
-        variableId: 1,
-        questionImage:"",
-        questionText:"¿Qué ingredientes son los que más utiliza?",
-        options:[
-          {
-            id:1,
-            optionsImage:"",
-            optionsText:"Peperoni, Piña",
-          },
-          {
-            id:2,
-            optionsImage:"",
-            optionsText:"Mortadela, Queso",
-          },
-          {
-            id:3,
-            optionsImage:"",
-            optionsText:"Otros",
-          }
-        ]
-      }
-    ],
-  }
+      },
+      status: 1
+    },{
+      id: "61771532cab0a86fda4f395c",
+      name: "Nueva Encuesta",
+      description: "Survey on ho to prepare homemade pizza",
+      process_id: 1,
+      created_at: "2021-10-19T20:33:25.402000",
+      updated_at: "2021-10-19T20:33:25.402000",
+      json_body: {
+        questions: []
+      },
+      status: 1
+    }
 ];
 
 const components = [
@@ -1821,7 +1798,7 @@ export const findUserByCredentials = (username, password) => {
 
 export const findPollsByProcess = (id) => {
   return polls.filter((p) =>{
-    if (p.processID === id) {
+    if (p.process_id === id) {
       return p;
     }else {
       return null;

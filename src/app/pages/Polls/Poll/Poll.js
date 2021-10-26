@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from "react-redux";
 
-import { findPollsByProcess, findPollsById } from '../../../../api/data';
+import * as surveyActions from '../../../../redux/actions/survey.actions';
 import '../../../assets/scss/modelos.scss';
 import surveyImg from '../../../assets/img/survey.svg';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -15,29 +16,39 @@ function Poll(props){
 
   const history = useHistory();
   const location = useLocation();
+  const user = useSelector((state) => state.LoginState.data);
   const [ polls, setPolls ] = useState([]);
   const [ loadingPolls, setLoadingPolls ] = useState(true);
   const [ layout, setLayout ] = useState('grid');
   const [ globalFilter, setGlobalFilter] = useState([]);
   const [ search, setSearch] = useState();
-  const [ pollId, setPollId ] = useState(0);
+  const [ pollId, setPollId ] = useState("");
+
+  const loadSurveys = async () =>{
+    try {
+      const d = await surveyActions.getSurveyByProcess(props.processId, user.access_token);
+      setPolls(d);
+      console.log(d);
+      setLoadingPolls(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(()=>{
     if(props.processId === undefined){
       console.log('No hay el id del Proceso');
     }else {
-      const datas = findPollsByProcess(props.processId);
-      console.log(datas);
-      setPolls(datas);
-      setLoadingPolls(false)
-      console.log(polls);
+      loadSurveys();
     }
-  }, [props.modelId]);
+  }, [props.processId]);
 
-  useEffect(()=>{
-    if (pollId > 0) {
+
+  useEffect( async ()=>{
+    if (pollId !== "") {
       console.log(pollId);
-      let data = findPollsById(pollId);
+      let data = await surveyActions.getSurveyById(pollId, user.access_token);
+      console.log(data);
       history.push({
         pathname:'/admin/survey/edit',
         state:{
