@@ -1,15 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useSelector} from "react-redux";
 
 import * as surveyActions from '../../../../redux/actions/survey.actions';
 import '../../../assets/scss/modelos.scss';
 import surveyImg from '../../../assets/img/survey.svg';
+import bin from '../../../assets/img/bin.png';
+import editarImg from '../../../assets/img/editarImg.png';
 import { useHistory, useLocation } from 'react-router-dom';
 import { size } from 'lodash';
 
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { Dialog } from "primereact/dialog";
+import {Toast} from 'primereact/toast';
 
 
 function Poll(props){
@@ -23,15 +27,31 @@ function Poll(props){
   const [ globalFilter, setGlobalFilter] = useState([]);
   const [ search, setSearch] = useState();
   const [ pollId, setPollId ] = useState("");
+  const [ dialog, setDialog ] = useState(false);
+  const toast = useRef(null);
 
   const loadSurveys = async () =>{
     try {
-      const d = await surveyActions.getSurveyByProcess(props.processId, user.access_token);
-      setPolls(d);
-      console.log(d);
+      setPolls(await surveyActions.getSurveyByProcess(props.processId, user.access_token));
       setLoadingPolls(false);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const deleteSurvey = async() =>{
+    try {
+      let code = surveyActions.deleteSurvey(pollId, user.access_token);
+      console.log(code);
+      if (code === 200) {
+        loadSurveys();
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Survey Deleted!', life: 3000 });
+      }else {
+        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error!', life: 3000 });
+      }
+      setDialog(false);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -46,15 +66,7 @@ function Poll(props){
 
   useEffect( async ()=>{
     if (pollId !== "") {
-      console.log(pollId);
-      let data = await surveyActions.getSurveyById(pollId, user.access_token);
-      console.log(data);
-      history.push({
-        pathname:'/admin/survey/edit',
-        state:{
-          poll:data,
-        },
-      });
+      setDialog(true);
     };
   });
 
@@ -73,6 +85,43 @@ function Poll(props){
     }
   };
 
+  const headerDialogHeader = () => {
+      return (
+          <>
+              <span className="p-d-block p-text-center" >
+                  Choose an option
+              </span>
+          </>
+      );
+  };
+
+  const confirmationDialogFooter = (
+      <>
+          <Button
+              className="p-button-text p-button-danger"
+              type="button" label="Cancel"
+              onClick={() => close()} />
+      </>
+  );
+
+  const close = () =>{
+    setDialog(false);
+    setPollId('');
+  };
+
+  const edit = async(v) =>{
+    if (v) {
+      console.log(pollId);
+      let data = await surveyActions.getSurveyById(pollId, user.access_token);
+      console.log(data);
+      history.push({
+        pathname:'/admin/survey/edit',
+        state:{
+          poll:data,
+        },
+      });
+    };
+  }
 
   const dataviewHeader = (
       <div className="p-grid p-nogutter">
@@ -133,6 +182,7 @@ function Poll(props){
 
   return(
     <div>
+    <Toast ref={toast}/>
       <div>
         {loadingPolls ? (<h4>This process does not have surveys</h4>):''}
         {size(globalFilter) >= 0?(
@@ -144,6 +194,28 @@ function Poll(props){
           <h4>The requested survey does not exist</h4>
         )
         }
+      </div>
+      <div>
+      <Dialog
+          header={ headerDialogHeader } visible={ dialog }
+          onHide={() => close()}
+          style={{ width: '340px' }} modal
+          footer={ confirmationDialogFooter }>
+
+          <div className="p-text-center">
+              <div className="p-d-inline p-m-1">
+                  <Button className="p-button-primary" iconPos="bottom" label="Edit" onClick={() => edit(true)}>
+                      <img className="p-button-icon p-pt-1" src={ editarImg } style={{ width: '50px' }} />
+                  </Button>
+              </div>
+
+              <div className="p-d-inline p-m-1">
+                  <Button className="p-button-danger" iconPos="bottom" label="Delete" onClick={() => deleteSurvey()}>
+                      <img className="p-button-icon p-pt-1" src={ bin } style={{ width: '50px' }} />
+                  </Button>
+              </div>
+          </div>
+      </Dialog>
       </div>
     </div>
   )

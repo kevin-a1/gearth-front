@@ -1,5 +1,5 @@
 
-export const URL_BASE = 'http://gearth.xyz:8001/'; 
+export const URL_BASE = 'http://gearth.xyz:8001/';
 
  //export const URL_BASE = 'http://127.0.0.1:8000/';
 export const URL_BASE_NEO4J = 'http://ec2-54-198-149-53.compute-1.amazonaws.com:8001/api/v1';
@@ -51,4 +51,5 @@ export const urlCreateComplementaryTool = 'toolbox/create-complementaries'
 export const urlListSurveysByProcess = 'surveys-api/get/process/';
 export const urlCreateSurvey = 'surveys-api/create';
 export const urlUpdateSurvey = 'surveys-api/update/';
-export const urlGetSurveyById = 'surveys-api/get/'
+export const urlGetSurveyById = 'surveys-api/get/';
+export const urlDeleteSurvey = 'surveys-api/delete/';

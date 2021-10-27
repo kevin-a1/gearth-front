@@ -111,3 +111,16 @@ export const getSurveyById = async (surveyId, token) =>{
   );
   return data.data;
 };
+
+export const deleteSurvey = async( surveyId, token) =>{
+  const {data} = await axios.delete(
+    `${urls.URL_BASE}${urls.urlDeleteSurvey}${surveyId}`,{
+      headers:{
+        Authorization:'Bearer '+ token
+      },
+    }
+  );
+  if (data.code === 200) {
+    return 200;
+  };
+};

@@ -93,7 +93,7 @@ const EditPoll = () => {
     };
 
     useEffect(() => {
-      let dat = poll[0];
+      let dat = poll;
       var formId = dat.id;
       if(formId !== undefined){
         setFormDetails(poll)

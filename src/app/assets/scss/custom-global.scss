@@ -1,4 +1,4 @@
-//Custom BG
+//CUSTOM BG
 
 .bg-dark {
     background-color: #3E4754;
@@ -16,6 +16,8 @@
     background-color: #ffffff;
 }
 
+/* CUSTOM COLOR */
+
 .color-danger {
     color: #F48FB1;
 }
@@ -24,13 +26,15 @@
     color: #C5E1A5;
 }
 
-//Inputs
+.color-primary {
+    color: #464DF2;
+}
 
 .required-input {
     color: #F48FB1;
 }
 
-//Delete buttons of input type number
+/* Delete buttons of input type number */
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 

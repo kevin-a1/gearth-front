@@ -399,7 +399,7 @@
   text-decoration:none;
 }
 
-//Custom
+//Custom od cards
 
 .generic_content {
   border-radius: 27px;
@@ -456,34 +456,38 @@
   }
 }
 
-//Inputs
+.generic_content:hover {
+  box-shadow: 3px 3px 7px #2ECC71;
+}
+
+/* INPUTS *************************************************************************************************************** */
 
 @media (min-width: 540px) {
-  .input-person-register {
+  .input-register {
     width: 400px !important;
   }
 }
 
 @media (min-width: 767px) {
-  .input-person-register {
+  .input-register {
     width: 200px !important;
   }
 }
 
 @media (min-width: 768px) {
-  .input-person-register {
-    width: 250px !important;    
+  .input-register {
+    width: 250px !important;  
   }
 }
 
 @media (min-width: 1050px) {
-  .input-person-register {
+  .input-register {
     width: 300px !important;    
   }
 }
 
 @media (min-width: 1250px) {
-  .input-person-register {
+  .input-register {
     width: 350px !important;    
   }
 }
