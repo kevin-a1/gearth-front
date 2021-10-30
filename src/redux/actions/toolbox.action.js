@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 import api from "../../api";
 import * as urls from  '../../api/urls';
+import { uploadImages } from './generics.action';
 
 export const setLoadingToolAction = createAction('SET_LOADING_TOOL_ACTION');
 export const setToolDataAction = createAction('SET_TOOL_DATA_ACTION');
@@ -51,7 +52,7 @@ export const getTools = (history) => async (dispatch,getState) =>{
             dispatch(setToolDataAction(data));
             dispatch(
                 setToolErrorAction({
-                    message:"Exito"
+                    message:null
                 })
             );
         }
@@ -95,7 +96,7 @@ export const getToolsDistinct = (history, tool_id) => async (dispatch,getState) 
             dispatch(setDistinctToolDataAction(data));
             dispatch(
                 setDistinctToolErrorAction({
-                    message:"Exito"
+                    message:null
                 })
             );
         }
@@ -139,7 +140,7 @@ export const getToolById = (history,tool_id) => async (dispatch,getState) =>{
             dispatch(setCurrentToolDataAction(data));
             dispatch(
                 setCurrentToolErrorAction({
-                    message:"Exito"
+                    message:null
                 })
             );
         }
@@ -167,14 +168,20 @@ export const getToolById = (history,tool_id) => async (dispatch,getState) =>{
 export const createTool = (data) =>async (dispatch,getState)=>{
 
     const token = getState()?.LoginState?.data?.access_token;
-    const dataCreate = {
+    let dataCreate = {
         name:data?.name,
-        keywords:data?.description,
-        origins: data?.long_description
+        keywords:data?.keywords,
+        origins: data?.origins,
+        url:data?.url,
+        description:data?.description,
+        folder:"toolbox",
+        team_id:0,
+        type:2,
+        dataImage:data?.dataImage
     }
 
-    dispatch(setResetCreateToolAction());
-    dispatch(setLoadingCreateToolAction(false));
+    dispatch(setResetCurrentToolAction());
+    dispatch(setLoadingCurrentToolAction(false));
     try{
 
         const {data, status} = await api.post(urls.urlCreateTool,dataCreate, {
@@ -184,10 +191,75 @@ export const createTool = (data) =>async (dispatch,getState)=>{
            });
 
         if(status === 200){
-            dispatch(setToolCreateDataAction(data));
+            dispatch(setCurrentToolDataAction(data));
             dispatch(
-                setToolCreateErrorAction({
-                    message:"Exito"
+                setCurrentToolErrorAction({
+                    message:null
+                })
+            );
+            dataCreate.type_id=data?.id
+            dispatch(uploadImages(dataCreate))
+        }
+
+    }
+    catch(error){
+        dispatch(
+            setCurrentToolErrorAction({
+                message:"Error al recuperar información"
+            })
+        );
+
+    }
+
+    dispatch(setLoadingCurrentToolAction(false));
+
+};
+
+
+
+export const createToolAditionalData = (data) =>async (dispatch,getState)=>{
+
+    const token = getState()?.LoginState?.data?.access_token;
+    const{opcion,id} = data;
+    let dataCreate = {
+        id: id,
+    }
+    let url = "";
+
+    if(opcion === "theory"){
+        dataCreate.theory =  data?.theory;
+        url = urls.urlCreateToolTheory;
+
+    }
+    else if(opcion==="method"){
+        dataCreate.method =  data?.method;
+        url = urls.urlCreateToolMethod;
+    }
+    else if(opcion === "use"){
+        dataCreate.use =  data?.use;
+        url = urls.urlCreateToolUse;
+    }
+    else{
+        dataCreate.changes =  data?.changes;
+        url = urls.urlCreateToolChanges;
+    }
+
+
+    dispatch(setResetCurrentToolAction());
+    dispatch(setLoadingCurrentToolAction(false));
+    try{
+
+        const {data, status} = await api.put(url,dataCreate, {
+            headers: {
+              Authorization: 'Bearer ' + token //the token is a variable which holds the token
+            }
+           });
+
+        if(status === 200){
+            dispatch(setCurrentToolDataAction(data));
+            dispatch(
+                setCurrentToolErrorAction({
+                    message:null
                 })
             );
         }
@@ -195,14 +267,14 @@ export const createTool = (data) =>async (dispatch,getState)=>{
     }
     catch(error){
         dispatch(
-            setToolCreateErrorAction({
+            setCurrentToolErrorAction({
                 message:"Error al recuperar información"
             })
         );
 
     }
 
-    dispatch(setLoadingCreateToolAction(false));
+    dispatch(setLoadingCurrentToolAction(false));
 
 };
 
@@ -230,7 +302,7 @@ export const createComplementaryTool = (data) =>async (dispatch,getState)=>{
             dispatch(setComplementaryToolDataAction(data));
             dispatch(
                 setComplementaryToolErrorAction({
-                    message:"Exito"
+                    message:null
                 })
             );
         }
@@ -246,5 +318,17 @@ export const createComplementaryTool = (data) =>async (dispatch,getState)=>{
     }
 
     dispatch(setLoadingComplementaryToolAction(false));
+
+};
+
+export const cleanTool = () =>async (dispatch,getState)=>{
+
+
+    dispatch(setResetCurrentToolAction());
+    dispatch(setLoadingCurrentToolAction(false));
+    dispatch(setCurrentToolDataAction({}));
+    dispatch(
+        setCurrentToolErrorAction(null)
+    );
 
 };

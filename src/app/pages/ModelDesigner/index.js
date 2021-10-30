@@ -13,7 +13,7 @@ const ModelDesigner = () =>{
         {id: 1, label: 'Modelización', icon: 'pi pi-users'},
         {id: 2, label: 'Momentos', icon: 'pi pi-eye'},
         {id: 3, label: 'Procesos y actividades', icon: 'pi pi-eye'},
-        {id: 4, label: 'Red de pares progresistas', icon: 'pi pi-eye'},
+        {id: 4, label: 'Red de pares', icon: 'pi pi-eye'},
     ];
 
     const [tabSelected, setTabSelected] = useState(wizardItems[0]);

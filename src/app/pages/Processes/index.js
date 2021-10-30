@@ -8,10 +8,10 @@ import { findAllMoments } from '../../../api/data';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
 import { AutoComplete } from 'primereact/autocomplete';
-import { getModelsListByUser } from '../../../redux/actions/graph-modelizer.actions';
-import { useSelector } from 'react-redux';
 import { bodyTemplate, statusBodyTemplate } from '../utils/templates/tableTemplates';
 import defaultImg from '../../assets/flechas.png';
+import { getMomentsModelByModelId } from '../../../redux/actions/moments-model.actions';
+import { useSelector } from 'react-redux';
 
 const Processes = () => {
 
@@ -25,25 +25,23 @@ const Processes = () => {
     const [ autoValue, setAutoValue ] = useState(null);
 
     const user = useSelector((state) => state.LoginState.data);
-    const  toast  = useRef(null);
+    const toast  = useRef(null);
     const history = useHistory();
 
-    const loadData = async () => {
-        setModels(await getModelsListByUser(user?.team?.id, user?.access_token));
-        setModelsFilters(await getModelsListByUser(user?.team?.id, user?.access_token));
+    const loadData = async() => {
+        setModels( await getMomentsModelByModelId(194, user?.access_token) );
+        setModelsFilters( await getMomentsModelByModelId(194, user?.access_token) );
     }
 
     useEffect(() => {
-        setModels(findAllMoments());
-        setModelsFilters(findAllMoments());
-        //loadData();
+        loadData();
     }, []);
 
     useEffect(() => {
 
         if (dropdownValue) {
 
-            if (dropdownValue == 'm') {
+            if (dropdownValue === 'm') {
 
                 let data = []
 
@@ -55,7 +53,7 @@ const Processes = () => {
                 }
                 setAutoValue( data );
 
-            } else if (dropdownValue == 'p') {
+            } else if (dropdownValue === 'p') {
 
                 let data = []
 
@@ -71,7 +69,7 @@ const Processes = () => {
                 }
                 setAutoValue( data );
 
-            } else if (dropdownValue == 'a') {
+            } else if (dropdownValue === 'a') {
 
                 let data = []
 
@@ -114,8 +112,7 @@ const Processes = () => {
     }, [ selectedAutoValue ])
 
     const reloadData = (event) => {
-        setModels(findAllMoments());
-        setModelsFilters(findAllMoments());
+        loadData();
         toast.current.show({ severity: 'info', summary: 'Data Reloaded Successfully', life: 3000 });
     }
 
@@ -248,15 +245,6 @@ const Processes = () => {
         </>
     );
 
-    const imageBodyTemplate = (data) => {
-        return (
-            <>
-                <span className="p-column-title">Image</span>
-                <img src={`${ defaultImg }`} alt='_blank' className="product-image" style={{ boxShadow: 'none' }} />
-            </>
-        );
-    };
-
     const nameBodyTemplate = (data, props) => {
         return (
             <>
@@ -270,7 +258,7 @@ const Processes = () => {
         return (
             <>
                 <span className="p-column-title">Description</span>
-                <p style={{ textAlign: 'justify', fontSize: '.95rem' }}>{data?.description}</p>
+                <p style={{ textAlign: 'justify', fontSize: '.99rem' }}>{data?.description}</p>
             </>
         );
     };
@@ -279,7 +267,7 @@ const Processes = () => {
 
         const handleButton = () => {
             history.push({
-                pathname: '/admin/add-processes',
+                pathname: '/admin/add-process',
                 state: {
                     model: data, 
                 },
@@ -288,7 +276,7 @@ const Processes = () => {
 
         return (
             <>
-                <Button onClick={ handleButton } icon="pi pi-plus" className="p-button-success p-button-rounded" label="New Process" />
+                <Button onClick={ handleButton } icon="pi pi-plus" className="p-button-success p-button-rounded" label="Process" />
             </>
         );
     }
@@ -298,7 +286,7 @@ const Processes = () => {
         const handleButton = () => {
 
             history.push({
-                pathname: '/admin/add-activity',
+                pathname: '/bpmn/builder',
                 state: {
                     process: data,
                     action: (data?.activities?.length > 0) ? 'edit' : 'new',
@@ -308,7 +296,7 @@ const Processes = () => {
 
         const handleViewButton = () => {
             history.push({
-                pathname: '/admin/view-activity',
+                pathname: '/bpmn/viewer',
                 state: {
                     process: data,
                 },
@@ -336,7 +324,7 @@ const Processes = () => {
 
         const handleButton = () => {
             history.push({
-                pathname: '/admin/build-form',
+                pathname: '/form/builder',
                 state: {
                     process: data,
                 },
@@ -345,9 +333,10 @@ const Processes = () => {
 
         const handleViewButton = () => {
             history.push({
-                pathname: '/admin/render-form-schema',
+                pathname: '/form/viewer',
                 state: {
                     activity: data,
+                    token: user?.access_token,
                 },
             });
         }
@@ -355,15 +344,15 @@ const Processes = () => {
         return (
             <div style={{ textAlign: 'center' }}>
                 {
-                    (data?.schema) &&
+                    (data?.type) &&
                         <Button 
                             onClick={ handleViewButton } icon="pi pi-eye" 
                             className="p-button-info p-button-rounded p-mx-1" 
                             title="View Form" />
                 }
                 <Button 
-                    onClick={ handleButton } icon={ `pi pi-${ (data?.schema) ? 'pencil' : 'plus' }` } 
-                    className={ `p-button-rounded p-button-${ (data?.schema) ? 'warning' : 'success' }` }
+                    onClick={ handleButton } icon={ `pi pi-${ (data?.type) ? 'pencil' : 'plus' }` } 
+                    className={ `p-button-rounded p-button-${ (data?.type) ? 'warning' : 'success' }` }
                     title={ (data?.activities?.length > 0) ? 'Edit Form' : 'New Form' } />
             </div>
         );
@@ -408,11 +397,10 @@ const Processes = () => {
                     <DataTable value={ models } expandedRows={ expandedRows } className="p-datatable-customers" dataKey="id" onRowToggle={(e) => setExpandedRows(e.data)} onRowExpand={ onRowExpand } onRowCollapse={ onRowCollapse }
                         header={ modelsTableHeader } rowExpansionTemplate={ rowExpansionTemplate }>
                         <Column expander headerStyle={{ width: '3rem' }} />
-                        <Column style={{ width: '10rem' }} field="img" header="Image" body={ imageBodyTemplate }></Column>
-                        <Column style={{ width: '20rem' }} field="name" header="Name" sortable body={ nameBodyTemplate }></Column>
+                        <Column style={{ width: '19rem' }} field="name" header="Name" sortable body={ nameBodyTemplate }></Column>
                         <Column field="description" header="Description" sortable body={ descBodyTemplate }></Column>
                         <Column style={{ width: '9rem' }} field="status" header="Status" sortable body={ statusBodyTemplate }></Column>
-                        <Column style={{ width: '15rem' }} body={ modelButtonsTemplate }></Column>
+                        <Column style={{ width: '10rem' }} body={ modelButtonsTemplate }></Column>
                     </DataTable>
                 </div>
             </div>

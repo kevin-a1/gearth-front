@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import AppFooter from '../layouts/AppFooter';
 import { Steps } from 'primereact/steps';
 import { dplans } from '../../api/data';
 import { Button } from 'primereact/button';
@@ -8,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { FileUpload } from 'primereact/fileupload';
 
 export const SignUp = () =>{
-  const [plane, setPlane] = useState(dplans)
+  const [plane] = useState(dplans)
   const [index, setIndex] = useState(0)
   const [names, setNames] = useState('');
   const [email, setEmail] = useState('');
@@ -52,8 +51,8 @@ export const SignUp = () =>{
       toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
   }
   const photo = () =>{
-    let dato;
-    return dato = "https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg";
+    //let dato;
+    //return dato = "https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg";
   }
 
   const persona = ()=>{
@@ -64,7 +63,7 @@ export const SignUp = () =>{
             <br/><br/>
             <div className="center">
               <div className="card p-d-inline-flex rounded p-shadow-20">
-                  <input type="image" src={photo()} className="img-profile"/>
+                  <input type="image" src={photo()} className="img-profile" alt="profile"/>
               </div>
                 <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize={1000000} onUpload={onUpload} />
             </div>

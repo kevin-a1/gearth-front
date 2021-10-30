@@ -7,12 +7,12 @@ import useForm from '../../../hooks/useForm';
 import { Steps } from 'primereact/steps';
 import '../../assets/scss/register.scss';
 import { changeLayoutCSS, changeThemeCSS } from '../utils/helpers/changeStyleSheetsColor';
+import TeamTemplate from './templates/TeamTemplate';
 
 const Register = () => {
 
     const [ index, setIndex ] = useState(0);
     const { values, setValues, handleInputChange } = useForm({
-        plan: '',
         id: '',
         names: '',
         lnames: '',
@@ -22,7 +22,26 @@ const Register = () => {
         username: '',
         password: '',
         confirmation: '',
+        team: '',
+        desc: '',
+        plan: 1,
+        rol: 1,
     });
+
+    // const { values, setValues, handleInputChange } = useForm({
+    //     plan: '',
+    //     id: '1111111111',
+    //     names: 'Gabriela Andreina',
+    //     lnames: 'Álvarez',
+    //     email: 'gaby@gmail.com',
+    //     phone: '9999999999',
+    //     gender: 'F',
+    //     username: 'Gaby',
+    //     password: 'gaby1234567890',
+    //     confirmation: 'gaby1234567890',
+    //     team: 'Test',
+    //     desc: 'Test team for testing',
+    // });
 
     useEffect(() => {
         changeLayoutCSS('dark');
@@ -32,19 +51,22 @@ const Register = () => {
     const wizardItems = [
         { label: "Choose a Plan" },
         { label: 'Personal Info' },
-        { label: 'User Info' }
+        { label: 'User Info' },
+        { label: 'Team Info' },
     ];
 
-    const renderSwitch = (i) => {
-        switch(i) {
+    const templateSwitch  = () => {
+        switch(index) {
             case 0:
                 return <PlanTemplate setIndex={ setIndex } values={ values } setValues={ setValues } />;
             case 1:
-                return <PersonTemplate index={ index } setIndex={ setIndex } values={ values } handleInputChange={ handleInputChange } />;
+                return <PersonTemplate setIndex={ setIndex } values={ values } handleInputChange={ handleInputChange } />;
             case 2:
-                return <UserTemplate index={ index } setIndex={ setIndex } values={ values } handleInputChange={ handleInputChange } />;
+                return <UserTemplate setIndex={ setIndex } values={ values } handleInputChange={ handleInputChange } />;
+            case 3:
+                return <TeamTemplate setIndex={ setIndex } values={ values } handleInputChange={ handleInputChange } />;
             default:
-                return <h5>Template 4</h5>;
+                return <PlanTemplate setIndex={ setIndex } values={ values } setValues={ setValues } />;
         }
     }
 
@@ -73,7 +95,7 @@ const Register = () => {
                     <div className="login-wrapper" style={{ backgroundColor: '#3E4754', height: 'auto' }}>
 
                         <div style={{ width: '90%' }} >
-                            { renderSwitch(index) }
+                            { templateSwitch() }
                         </div>
 
                     </div>

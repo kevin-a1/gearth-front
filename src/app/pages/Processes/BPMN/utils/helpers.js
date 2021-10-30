@@ -35,3 +35,20 @@ export const _saveSVG = (e, modeler) => {
         }
     });
 };
+
+//
+export const importXML = (setDiagram, modeler, xml) => {
+
+    setDiagram(xml);
+
+    modeler.importXML(xml).then(({ warnings }) => {
+
+        if (warnings.length) console.log("Warnings", warnings);
+
+        const canvas = modeler.get("canvas");
+        canvas.zoom("fit-viewport", 'auto');
+
+    }).catch((err) => {
+        console.log("error", err);
+    });
+}

@@ -1,7 +1,7 @@
 import React, { useState,useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { InputTextarea } from 'primereact/inputtextarea';
+
 import { Dropdown } from 'primereact/dropdown';
 import axios from 'axios';
 import {Messages} from "primereact/messages";
@@ -15,9 +15,9 @@ export const Repository = () => {
 
     const {insertRepository}= useRepository();
 
-    const toast = useRef(null);
+
     const message = useRef();
-    const file = useRef(null);
+
 
     const [values,setValues] = useState({
         name:"",

@@ -4,7 +4,7 @@ const useForm = (initialState = {}, validateForm, action) =>{
 
     const [ values, setValues ] = useState(initialState);
     const [ errors, setErrors ] = useState({});
-    const [ isSubmitting, setIsSubmitting ] = useState(false);
+    const [  setIsSubmitting ] = useState(false);
 
     const handleInputChange = ({target}) =>{
 

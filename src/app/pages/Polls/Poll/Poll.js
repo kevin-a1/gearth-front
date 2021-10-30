@@ -30,26 +30,33 @@ function Poll(props){
   const [ dialog, setDialog ] = useState(false);
   const toast = useRef(null);
 
-  const loadSurveys = async () =>{
+  const loadSurveys = () =>{
     try {
-      setPolls(await surveyActions.getSurveyByProcess(props.processId, user.access_token));
-      setLoadingPolls(false);
+      surveyActions.getSurveyByProcess(props.processId, user?.access_token).then(responseSurvey =>{
+        setPolls(responseSurvey);
+        setLoadingPolls(false);
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const deleteSurvey = async() =>{
+  const deleteSurvey = () =>{
     try {
-      let code = surveyActions.deleteSurvey(pollId, user.access_token);
-      console.log(code);
-      if (code === 200) {
-        loadSurveys();
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Survey Deleted!', life: 3000 });
-      }else {
-        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error!', life: 3000 });
-      }
-      setDialog(false);
+      surveyActions.deleteSurvey(pollId, user?.access_token).then(responseDelete =>{
+        if (responseDelete.status === 200) {
+          loadSurveys();
+          toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Survey Deleted!', life: 3000 });
+          setDialog(false);
+          setPollId('');
+        }else {
+          toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error!', life: 3000 });
+          setDialog(false);
+          setPollId('');
+        };
+        setDialog(false);
+        setPollId('');
+      });
     } catch (e) {
       console.log(e);
     }
@@ -61,14 +68,14 @@ function Poll(props){
     }else {
       loadSurveys();
     }
-  }, [props.processId]);
+  }, [props.a]);
 
 
-  useEffect( async ()=>{
+  useEffect(()=>{
     if (pollId !== "") {
       setDialog(true);
     };
-  });
+  },[pollId]);
 
   const searchPoll = (text) => {
     if(text){

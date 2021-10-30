@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { putContainers, getTextByType } from './renderFunctions';
 
 const textRender = ({ component }) => {

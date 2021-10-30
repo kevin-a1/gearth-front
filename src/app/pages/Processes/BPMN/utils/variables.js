@@ -1,8 +1,14 @@
 /* Events of BPMN element */
 
 export const eventsBpmn = [
-    'element.contextmenu',
     'commandStack.changed',
+    'shape.removed',
+    'shape.changed',
+    // 'shape.create',
+    //'shape.remove',
+    //'shape.added',
+    'element.contextmenu',
+    //'elements.changed',
     //'element.hover',
     //'element.out',
     //'element.click',
@@ -11,29 +17,25 @@ export const eventsBpmn = [
     //'element.mouseup',
 ];
 
-export const BLANK_XML = (
-    `<?xml version="1.0" encoding="UTF-8"?>
-    <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0xcv3nk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-    <bpmn:process id="Process_0sckl64" isExecutable="true">
-        <bpmn:startEvent id="StartEvent_1" />
-    </bpmn:process>
-    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0sckl64">
-        <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        </bpmndi:BPMNShape>
-        </bpmndi:BPMNPlane>
-    </bpmndi:BPMNDiagram>
-    </bpmn:definitions>`
-);
+export const BLANK_XML = (`
+    <?xml version="1.0" encoding="UTF-8"?>
+    <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" id="Definitions_0y0yk9z" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.8.0">
+      <bpmn:process id="Process_1v7aqks" isExecutable="false" />
+      <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1v7aqks" />
+      </bpmndi:BPMNDiagram>
+    </bpmn:definitions>
+`);
 
 
 export const BLANK_SCHEMA = {
     schemaVersion: 1,
     exporter: {
-      name: "form-js (https://demo.bpmn.io)",
-      version: "1.0.0"
+        name: "form-js (https://demo.bpmn.io)",
+        version: "1.0.0"
     },
     components: [
+      
     ],
     type: "default",
     id: "Form"
@@ -49,7 +51,7 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
         <semantic:flowNodeRef>OrderReceivedEvent</semantic:flowNodeRef>
         <semantic:flowNodeRef>_6-652</semantic:flowNodeRef>
         <semantic:flowNodeRef>_6-674</semantic:flowNodeRef>
-        <semantic:flowNodeRef>CalmCustomerTask</semantic:flowNodeRef>
+        <semantic:flowNodeRef>CustomerT</semantic:flowNodeRef>
       </semantic:lane>
       <semantic:lane id="_6-446" name="pizza chef">
         <semantic:flowNodeRef>_6-463</semantic:flowNodeRef>
@@ -75,7 +77,7 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
       <semantic:outgoing>_6-748</semantic:outgoing>
       <semantic:messageEventDefinition messageRef="_1275940932433" />
     </semantic:intermediateCatchEvent>
-    <semantic:task id="CalmCustomerTask" name="Calm customer">
+    <semantic:task id="CustomerT" name="Calm customer">
       <semantic:incoming>_6-748</semantic:incoming>
       <semantic:outgoing>_6-746</semantic:outgoing>
     </semantic:task>
@@ -101,15 +103,15 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
     <semantic:sequenceFlow id="_6-636" name="" sourceRef="_6-565" targetRef="_6-616" />
     <semantic:sequenceFlow id="_6-691" name="" sourceRef="_6-652" targetRef="_6-674" />
     <semantic:sequenceFlow id="_6-693" name="" sourceRef="_6-652" targetRef="_6-463" />
-    <semantic:sequenceFlow id="_6-746" name="" sourceRef="CalmCustomerTask" targetRef="_6-674" />
-    <semantic:sequenceFlow id="_6-748" name="" sourceRef="_6-674" targetRef="CalmCustomerTask" />
+    <semantic:sequenceFlow id="_6-746" name="" sourceRef="CustomerT" targetRef="_6-674" />
+    <semantic:sequenceFlow id="_6-748" name="" sourceRef="_6-674" targetRef="CustomerT" />
   </semantic:process>
   <semantic:message id="_1275940932198" />
   <semantic:process id="_6-2" isExecutable="false">
     <semantic:startEvent id="_6-61" name="Hungry for pizza">
       <semantic:outgoing>_6-125</semantic:outgoing>
     </semantic:startEvent>
-    <semantic:task id="SelectAPizzaTask" name="Select a pizza">
+    <semantic:task id="selectpzz" name="Select a pizza">
       <semantic:incoming>_6-125</semantic:incoming>
       <semantic:outgoing>_6-178</semantic:outgoing>
     </semantic:task>
@@ -150,8 +152,8 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
     <semantic:endEvent id="_6-406" name="Hunger satisfied">
       <semantic:incoming>_6-436</semantic:incoming>
     </semantic:endEvent>
-    <semantic:sequenceFlow id="_6-125" name="" sourceRef="_6-61" targetRef="SelectAPizzaTask" />
-    <semantic:sequenceFlow id="_6-178" name="" sourceRef="SelectAPizzaTask" targetRef="_6-127" />
+    <semantic:sequenceFlow id="_6-125" name="" sourceRef="_6-61" targetRef="selectpzz" />
+    <semantic:sequenceFlow id="_6-178" name="" sourceRef="selectpzz" targetRef="_6-127" />
     <semantic:sequenceFlow id="_6-420" name="" sourceRef="_6-127" targetRef="_6-180" />
     <semantic:sequenceFlow id="_6-422" name="" sourceRef="_6-180" targetRef="_6-202" />
     <semantic:sequenceFlow id="_6-424" name="" sourceRef="_6-180" targetRef="_6-219" />
@@ -169,7 +171,7 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
     <semantic:messageFlow id="_6-646" name="receipt" sourceRef="_6-565" targetRef="_6-304" />
     <semantic:messageFlow id="_6-648" name="money" sourceRef="_6-304" targetRef="_6-565" />
     <semantic:messageFlow id="_6-640" name="pizza" sourceRef="_6-514" targetRef="_6-202" />
-    <semantic:messageFlow id="_6-750" name="" sourceRef="CalmCustomerTask" targetRef="_6-236" />
+    <semantic:messageFlow id="_6-750" name="" sourceRef="CustomerT" targetRef="_6-236" />
   </semantic:collaboration>
   <bpmndi:BPMNDiagram id="Trisotech.Visio-_6" name="Untitled Diagram" documentation="" resolution="96.00000267028808">
     <bpmndi:BPMNPlane bpmnElement="C1275940932557">
@@ -205,7 +207,7 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
         <dc:Bounds x="218" y="404" width="32" height="32" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Trisotech.Visio__6_CalmCustomerTask" bpmnElement="CalmCustomerTask">
+      <bpmndi:BPMNShape id="Trisotech.Visio__6_CustomerT" bpmnElement="CustomerT">
         <dc:Bounds x="286" y="386" width="83" height="68" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -229,7 +231,7 @@ export const PIZZA_EXAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
         <dc:Bounds x="66" y="96" width="30" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-74" bpmnElement="SelectAPizzaTask">
+      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-74" bpmnElement="selectpzz">
         <dc:Bounds x="145" y="77" width="83" height="68" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

@@ -1,8 +1,11 @@
 import React ,{useState, useEffect }from 'react'
-//import QuestionHeader from './QuestionHeader';
 import {Grid} from '@material-ui/core';
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {useSelector, useDispatch} from 'react-redux';
+import * as surveyActions from '../../../../redux/actions/survey.actions';
 
+
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Accordion from '@material-ui/core/Accordion';
@@ -20,7 +23,35 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    overflow: 'hidden',
+  },
+
+  content: {
+    fontSize: 15,
+    padding: 20,
+    textAlign: 'justify',
+  },
+
+  left:{
+    float: 'left',
+    width: 50,
+  },
+
+  right:{
+    float: 'right',
+    width: 50,
+  },
+  }));
+
 function QuestionsTab(props){
+
+
+
+    const dispatch = useDispatch();
+    const classes = useStyles();
 
     const [ questions, setQuestions ] = useState([]);
     const [ openUploadImagePop, setOpenUploadImagePop] = useState(false);
@@ -28,51 +59,52 @@ function QuestionsTab(props){
     const [formData, setFormData] = useState({});
     const [loadingFormData, setLoadingFormData] = useState(true);
     const [open, setOpen] = useState(false);
+    const user = useSelector((state) => state.LoginState?.data);
+    const model = useSelector((state) => state.ModelState?.model);
 
     useEffect(()=>{
       let data = props.formData.json_body;
-      console.log(data);
+      listVariable();
       if(data !== undefined){
         if(props.formData.json_body.questions.length === 0){
-          setQuestions([{questionText: "Question", options : [{optionText: "Option 1"}], open: false}]);
+          setQuestions([{id:1, questionText: "Question", options : [{id:1 ,optionText: "Option 1"}], open: true,type:'', type_option:"closed", subsistemaId:1, variableId:1}]);
         } else{
           setQuestions(props.formData.json_body.questions)
         }
         setLoadingFormData(false)
       }
-      setFormData(props.formData)
+      setFormData(props.formData);
+    }, [props.formData]);
 
-    }, [props.formData])
+    const listVariable = () =>{
+      surveyActions.getVariables(model?.id, user?.access_token).then(data=>{
+        console.log(data);
+      });
+    };
 
     function saveQuestions(){
-      let date = new Date().getTime();
       console.log("auto saving questions initiated");
       var data = {
-        formId: formData.id,
+        id: formData.id,
         name: formData.name,
+        model_id:formData.model_id,
+        activity_id:formData.activity_id,
         description: formData.description,
-        processID:formData.processID,
-        createdAt:formData.createdAt,
-        updateAt:date,
-        questions: questions
+        process_id:formData.process_id,
+        json_body:{
+          questions:questions
+        },
       }
+      const save = async(da) =>{
+        try {
+          let d = await dispatch(surveyActions.editSurvey(da, user?.access_token));
+          console.log(d);
+        } catch (e) {
+          console.log(e);
+        };
+      };
       console.log(data);
-
-      /*formService.autoSave(data)
-      .then((result) => {
-          console.log(result);
-          setQuestions(result.questions)
-          },
-          error => {
-          const resMessage =
-              (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-              error.message ||
-              error.toString();
-              console.log(resMessage);
-            }
-          );*/
+      save(data);
       };
 
     function checkImageHereOrNotForQuestion(gg){
@@ -95,19 +127,19 @@ function QuestionsTab(props){
     function addQuestionClosed() {
       setOpen(false);
       expandCloseAll();
-      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true, type:"closed", subsistemaId:1, variableId:1}]);
+      setQuestions(questions=> [...questions, {id:questions.length +1 , questionText: "Question", options : [{optionText: "Option 1"}], open: true,type:''/*Categorica No Categorica*/, type_option:"closed", subsistemaId:1, variableId:1}]);
     };
 
     function addQuestionMultiple(){
       setOpen(false);
       expandCloseAll();
-      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true, type:"multiple", subsistemaId:1, variableId:1}]);
+      setQuestions(questions=> [...questions, {id:questions.length +1 ,questionText: "Question", options : [{optionText: "Option 1"}], open: true, type:'', type_option:"multiple", subsistemaId:1, variableId:1}]);
     };
 
     function addQuestionOpen(){
       setOpen(false);
       expandCloseAll();
-      setQuestions(questions=> [...questions, {questionText: "Question", options : [], open: true, type:"open", subsistemaId:1, variableId:1}]);
+      setQuestions(questions=> [...questions, {id:questions.length +1 ,questionText: "Question", options : [], open: true,type:'', type_option:"open", subsistemaId:1, variableId:1}]);
     };
 
     function addMoreQuestionField(){
@@ -219,7 +251,7 @@ function QuestionsTab(props){
     function addOption(i){
       var optionsOfQuestion = [...questions];
       if(optionsOfQuestion[i].options.length < 5){
-        optionsOfQuestion[i].options.push({optionText: "Option " + (optionsOfQuestion[i].options.length + 1)})
+        optionsOfQuestion[i].options.push({id:optionsOfQuestion[i].options.length + 1 ,optionText: "Option " + (optionsOfQuestion[i].options.length + 1)})
       } else{
         console.log("Max  5 options ");
       }
@@ -275,13 +307,25 @@ function QuestionsTab(props){
                       <AccordionSummary aria-controls="panel1a-content" id="panel1a-header" elevation={1} style={{width:'100%'}}>
                         { !questions[i].open ? (
                           <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '3px', paddingTop: '15px', paddingBottom: '15px'}}>
+                          <div className={classes.Box}>
+                          <div className={classes.right}>
+                          <div className={classes.content}>
+                             #right content in there
+                          </div>
+                          </div>
+                          <div className={classes.left}>
+                          <div className={classes.content}>
+                             #left content in here
+                          </div>
+                          </div>
+                          </div>
                             <Typography variant="subtitle1" style={{marginLeft: '0px'}}>{i+1}.  {ques.questionText}</Typography>
                             {ques.questionImage !==""?(
                               <div>
                                 <img src={ques.questionImage} width="400px" height="auto" /><br></br><br></br>
                               </div>
                             ): "" }
-                            {ques.type == "open" ?(
+                            {ques.type_option == "open" ?(
                               <div style={{display:'flex'}}>
                                 <TextField id='standard-basic' label='Enter your answer' variant='standard' />
                               </div>
@@ -339,7 +383,7 @@ function QuestionsTab(props){
                           ): ""}
                         </div>
                         <div style={{width: '100%'}}>
-                          {ques.type == "open" ?(
+                          {ques.type_option == "open" ?(
                             <div style={{display:'flex', flexDirection:'row', marginLeft:'-12.5px', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px'}}>
                               <TextField id='standard-basic' label='Enter your answer' variant='standard' />
                             </div>
@@ -380,7 +424,7 @@ function QuestionsTab(props){
                             </div>
                           )))}
                         </div>
-                        {ques.type == 'open'?(''):(ques.options.length < 5 ? (
+                        {ques.type_option == 'open'?(''):(ques.options.length < 5 ? (
                           <div>
                             <FormControlLabel disabled control={<Radio />} label={
                               <Button size="small" onClick={()=>{addOption(i)}} style={{textTransform: 'none', marginLeft:"-5px"}}>
@@ -390,7 +434,7 @@ function QuestionsTab(props){
                         ): "")}
                         <br></br>
                         <br></br>
-                        {ques.type == 'open'?(''):(<Typography variant="body2" style={{color: 'grey'}}>You can add maximum 5 options. If you want to add more then change in settings. Multiple choice single option is availible</Typography>)}
+                        {ques.type_option == 'open'?(''):(<Typography variant="body2" style={{color: 'grey'}}>You can add maximum 5 options. If you want to add more then change in settings. Multiple choice single option is availible</Typography>)}
                         </div>
                       </AccordionDetails>
                       <Divider />

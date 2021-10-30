@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
-import { leftTemplate, rightTemplate } from './utils/templates';
+import { handleStepsTemplate, leftTemplate, rightTemplate } from './utils/templates';
 import { Fieldset } from 'primereact/fieldset';
 import { userValidation } from './utils/validations';
 
-const UserTemplate = ({ index, setIndex, values, handleInputChange }) => {
+const UserTemplate = ({ setIndex, values, handleInputChange }) => {
 
     const [ errors, setErrors ] = useState({
-        username: { error: false, errors: [], },
-        password: { error: false, errors: [], },
-        confirmation: { error: false, errors: [], },
+        username: { error: false, errors: [
+            { status: null, msg: 'Is required', },
+            { status: null, msg: 'Length > 3 and < 20', },
+            { status: null, msg: 'Correct format', },
+        ]},
+        password: { error: false, errors: [
+            { status: null, msg: 'Is required', },
+            { status: null, msg: 'Length > 8', },
+        ]},
+        confirmation: { error: false, errors: [
+            { status: null, msg: 'Is required', },
+            { status: null, msg: 'Equals password', },
+        ]},
     })
 
     const inputUsername = {
@@ -49,10 +58,8 @@ const UserTemplate = ({ index, setIndex, values, handleInputChange }) => {
 
         const { response, data } = userValidation(values);
 
-        if (response) setIndex(index + 1);
+        if (response) setIndex(i => i + 1);
         else setErrors(data);
-
-        console.log(errors);
     }
 
     return (
@@ -77,35 +84,13 @@ const UserTemplate = ({ index, setIndex, values, handleInputChange }) => {
                     </div>
                 </div>
             </div>
-            <div className="p-col-12 p-lg-10 p-pb-3" style={{ margin: 'auto', padding: '0px' }}>
-                <Toolbar
-                    className="p-p-2 p-p-lg-3 bg-dark"
-                    left={
-                        <Button
-                            style={{ width: '150px' }}
-                            className="p-button-danger p-mr-1"
-                            label="Back"
-                            icon="pi pi-arrow-left"
-                            onClick={() => {
-                                setIndex(index - 1);
-                            }} />
-                    }                    
-                    right={
-                        <Button
-                            type="submit"
-                            style={{ width: '150px' }}
-                            className="p-button-success"
-                            label="Continue"
-                            icon="pi pi-check"
-                            onClick={ handleContinue } /> 
-                    }/>
-            </div>
+
+            { handleStepsTemplate(() => { setIndex(i => i - 1) }, handleContinue) }
         </>
     )
 }
 
 UserTemplate.propTypes = {
-    index: PropTypes.number,
     setIndex: PropTypes.func,
     values: PropTypes.object,
     handleInputChange: PropTypes.func,

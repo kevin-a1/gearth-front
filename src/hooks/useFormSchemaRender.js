@@ -1,5 +1,3 @@
-import React from 'react'
-
 const useFormSchemaRender = (formSchema) => {
 
     //Schema is required
@@ -29,19 +27,19 @@ const getComponents = (components) => {
 
     for (const component of components) {
 
-        if (component?.type == 'select') {
+        if (component?.type === 'select') {
             componentsRenders.push(getDropdown(component));
-        } else if (component?.type == 'button') {
+        } else if (component?.type === 'button') {
             componentsRenders.push(getButton(component));
-        } else if (component?.type == 'text') {
+        } else if (component?.type === 'text') {
             componentsRenders.push(getText(component));
-        } else if (component?.type == 'textfield') {
+        } else if (component?.type === 'textfield') {
             componentsRenders.push(getInputText(component));
-        } else if (component?.type == 'number') {
+        } else if (component?.type === 'number') {
             componentsRenders.push(getInputNumber(component));
-        } else if (component?.type == 'radio') {
+        } else if (component?.type === 'radio') {
             componentsRenders.push(getRadioButton(component));
-        } else if (component?.type == 'checkbox') {
+        } else if (component?.type === 'checkbox') {
             componentsRenders.push(getCheckBox(component));
         }
     }
@@ -107,7 +105,7 @@ const getText = (component) => {
 
     if (text) {
         for (const letter of component?.text) {
-            if (letter == '#' ) {
+            if (letter === '#' ) {
                 count ++;
                 text = text.replace('#', '');
             } else break;
@@ -233,11 +231,11 @@ const getRadioButton = (component) => {
 //Helpers
 
 const getTextType = (count) => {
-    if (count == 1) return 'h2';
-    else if (count == 2) return 'h3';
-    else if (count == 3) return 'h4';
-    else if (count == 4) return 'h5';
-    else if (count == 5) return 'h6';
+    if (count === 1) return 'h2';
+    else if (count === 2) return 'h3';
+    else if (count === 3) return 'h4';
+    else if (count === 4) return 'h5';
+    else if (count === 5) return 'h6';
     else return 'p';
 }
 

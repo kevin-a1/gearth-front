@@ -96,8 +96,7 @@ const EditPoll = () => {
       let dat = poll;
       var formId = dat.id;
       if(formId !== undefined){
-        setFormDetails(poll)
-        console.log(formDeatils);
+        setFormDetails(poll);
       }
     },[poll]);
 

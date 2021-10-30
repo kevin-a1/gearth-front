@@ -94,8 +94,6 @@ export const registrarUsuario = (data) => {
         role_id: 1,
     }
 
-    console.log(USER_DATA);
-
     return new Promise(function (resolve, reject) {
 
         axios.post(`${urls.URL_BASE}${urls.urlRegister}`, USER_DATA).then(

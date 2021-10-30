@@ -58,7 +58,7 @@ const PlanTemplate = ({ setIndex, values, setValues }) => {
                                     </ul>
                                 </div>
                                 <div className="generic_price_btn clearfix">
-                                    <a onClick={() => { handleSelect('silver') }}>Sign up</a>
+                                    <a  onClick={() => { handleSelect('silver') }}>Sign up</a>
                                 </div>
                             </div>
                         </div>

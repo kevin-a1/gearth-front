@@ -57,6 +57,7 @@ const ChannelsList = (props) => {
   const channelsState = useSelector((state) => state.SocialNetworkState);
   const rolNavState = useSelector((state) => state.RolNavigationState?.state);
   const modelId = useSelector((state) => state.ModelState?.model?.id);
+
 // TODO: CHANGE MODEL ID WHEN IMPLEMENTATIOS IS READY
   const MODEL_ID = 1;
 
@@ -66,6 +67,7 @@ const ChannelsList = (props) => {
     try {
       await dispatch(
         socialNetworkActions.getChannels(
+      // TODO: Change model_id when implementation is ready
           MODEL_ID,
           userState?.data?.access_token
         )
@@ -110,7 +112,7 @@ const ChannelsList = (props) => {
       }
     } else {
       resp = await dispatch(
-        socialNetworkActions.updateChannel(channel, userState.data.access_token)
+        socialNetworkActions.updateChannel(channel, userState.data.access_token, rolNavState)
       );
       if (resp) {
         _status = resp[0];
@@ -157,7 +159,10 @@ const ChannelsList = (props) => {
     const resp = await dispatch(
       socialNetworkActions.deleteChannel(
         channel?.id,
-        userState.data.access_token
+        userState.data.access_token,
+        rolNavState,
+      // TODO: Change model_id when implementation is ready
+        MODEL_ID,
       )
     );
     const _status = resp[0];

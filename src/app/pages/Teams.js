@@ -13,6 +13,14 @@ import { FileUpload } from 'primereact/fileupload';
 import { AutoComplete } from 'primereact/autocomplete';
 
 const Teams = () => {
+    const emptyTeam = {
+        id: null,
+        name: '',
+        logo: '',
+        description: '',
+        plan_id: null,
+        status: true,
+    }
     
     const [switchValue, setSwitchValue] = useState(true);
     const [autoFilteredValue, setAutoFilteredValue] = useState([]);
@@ -30,14 +38,7 @@ const Teams = () => {
     const toast = useRef(null);
     const dt = useRef(null);
 
-    const emptyTeam = {
-        id: null,
-        name: '',
-        logo: '',
-        description: '',
-        plan_id: null,
-        status: true,
-    }
+
 
     useEffect(() => {
 

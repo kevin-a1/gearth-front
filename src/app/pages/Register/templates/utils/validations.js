@@ -1,17 +1,20 @@
-const NAMES_REGEX = /^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]{1,50}$/;
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const PHONE_REGEX = /^(()?\d{3}())?(-|\s)?\d{3}(-|\s)?\d{4}$/;
-const USERN_REGEX = /^[a-zA-Z0-9]+$/;
+import { EMAIL_REGEX, NAMES_REGEX, DESC_REGEX, PASSWORD_REGEX, PHONE_REGEX, USERNAME_REGEX } from "../../../utils/values/regex";
 
 export const personValidation = (values) => {
 
     const data = {};
 
+    const { response: idResponse, errors: idErrors } = idValidation(values.id);
     const { response: namesResponse, errors: namesErrors } = namesValidation(values.names);
     const { response: emailResponse, errors: emailErrors } = emailValidation(values.email);
     const { response: phoneResponse, errors: phoneErrors } = phoneValidation(values.phone);
     const { response: lnamesResponse, errors: lnamesErrors } = lnamesValidation(values.lnames);
     const { response: genderResponse, errors: genderErrors } = genderValidation(values.gender);
+
+    data.id = {
+        error: idResponse,
+        errors: idErrors,
+    };
 
     data.names = {
         error: namesResponse,
@@ -75,12 +78,60 @@ export const userValidation = (values) => {
     }
 }
 
+export const teamValidation = (values) => {
+
+    const data = {};
+
+    const { response: teamResponse, errors: teamErrors } = teamNameValidation(values.team);
+    const { response: descResponse, errors: descErrors } = teamDescValidation(values.desc);
+
+    data.team = {
+        error: teamResponse,
+        errors: teamErrors,
+    };
+
+    data.desc = {
+        error: descResponse,
+        errors: descErrors,
+    };
+
+    if (teamResponse || descResponse) {
+        return { response: false, data: data };
+    } else {
+        return { response: true, data: data };
+    }
+}
+
 //FIELDS VALIDATIONS
+
+const idValidation = (id) => {
+
+    const errors = [];
+    let response = false; //True if have errors
+    
+    if (id) {
+        errors.push({
+            status: true,
+            msg: 'Is required',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Is required',
+        });
+    }
+
+    return {
+        errors,
+        response,
+    };
+}
 
 const namesValidation = (names) => {
 
     const errors = [];
-    let response = false; //If have errors
+    let response = false; //True if have errors
     
     if (names) {
         errors.push({
@@ -195,10 +246,10 @@ const emailValidation = (email) => {
         });
     }
 
-    if (email.length < 60) {
+    if (email.length > 3 && email.length < 320) {
         errors.push({
             status: true,
-            msg: 'Length < 60',
+            msg: 'Length > 3 and < 320',
         });
     } else {
         response = true;
@@ -319,7 +370,7 @@ const usernameValidation = (username) => {
         });
     }
 
-    if (username.match(USERN_REGEX)) {
+    if (username.match(USERNAME_REGEX)) {
         errors.push({
             status: true,
             msg: 'Correct format',
@@ -369,6 +420,19 @@ const passwordValidation = (password) => {
         });
     }
 
+    if (password.match(PASSWORD_REGEX)) {
+        errors.push({
+            status: true,
+            msg: 'Correct format',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Correct format',
+        });
+    }
+
     return {
         errors,
         response,
@@ -393,7 +457,7 @@ const confirmationValidation = (confirmation, password) => {
         });
     }
 
-    if (confirmation && confirmation == password) {
+    if (confirmation && confirmation === password) {
         errors.push({
             status: true,
             msg: 'Equals password',
@@ -403,6 +467,106 @@ const confirmationValidation = (confirmation, password) => {
         errors.push({
             status: false,
             msg: 'Equals password',
+        });
+    }
+
+    return {
+        errors,
+        response,
+    };
+}
+
+const teamNameValidation = (name) => {
+
+    const errors = [];
+    let response = false; //If have errors
+    
+    if (name) {
+        errors.push({
+            status: true,
+            msg: 'Is required',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Is required',
+        });
+    }
+
+    if (name.length > 3 && name.length < 200) {
+        errors.push({
+            status: true,
+            msg: 'Length > 3 and < 200',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Length > 3 and < 200',
+        });
+    }
+
+    if (name.match(NAMES_REGEX)) {
+        errors.push({
+            status: true,
+            msg: 'Correct format',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Correct format',
+        });
+    }
+
+    return {
+        errors,
+        response,
+    };
+}
+
+const teamDescValidation = (desc) => {
+
+    const errors = [];
+    let response = false; //If have errors
+    
+    if (desc) {
+        errors.push({
+            status: true,
+            msg: 'Is required',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Is required',
+        });
+    }
+
+    if (desc.length > 5 && desc.length < 500) {
+        errors.push({
+            status: true,
+            msg: 'Length > 5 and < 500',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Length > 5 and < 500',
+        });
+    }
+
+    if (desc.match(DESC_REGEX)) {
+        errors.push({
+            status: true,
+            msg: 'Correct format',
+        });
+    } else {
+        response = true;
+        errors.push({
+            status: false,
+            msg: 'Correct format',
         });
     }
 

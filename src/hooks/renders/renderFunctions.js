@@ -88,7 +88,7 @@ export const getTextByType  = (attributes, type, value) => {
 
     let text;
     
-    if (type == 'p') {
+    if (type === 'p') {
         text = (
             <>
                 <p
@@ -101,7 +101,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </p>
             </>
         )
-    } else if (type == 'span') {
+    } else if (type === 'span') {
         text = (
             <>
                 <span
@@ -114,7 +114,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </span>
             </>
         )
-    } else if (type == 'i') {
+    } else if (type === 'i') {
         text = (
             <>
                 <i
@@ -127,7 +127,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </i>
             </>
         )
-    } else if (type == 'b') {
+    } else if (type === 'b') {
         text = (
             <>
                 <b
@@ -140,7 +140,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </b>            
             </>
         )
-    } else if (type == 'u') {
+    } else if (type === 'u') {
         text = (          <>
                 <u
                     id={ attributes?.id }
@@ -152,7 +152,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </u>            
             </>
         )
-    } else if (type == 'mark') {
+    } else if (type === 'mark') {
         text = (
             <>
                 <mark
@@ -165,7 +165,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </mark>            
             </>
         )
-    } else if (type == 'pre') {
+    } else if (type === 'pre') {
         text = (
             <>
                 <pre
@@ -178,7 +178,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </pre>           
             </>
         )
-    } else if (type == 'div') {
+    } else if (type === 'div') {
         text = (
             <>
                 <div
@@ -191,7 +191,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </div>            
             </>
         )
-    } else if (type == 'h1') {
+    } else if (type === 'h1') {
         text = (
             <>
                 <h1
@@ -204,7 +204,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </h1>
             </>
         )
-    } else if (type == 'h2') {
+    } else if (type === 'h2') {
         text = (
             <>
                 <h2
@@ -217,7 +217,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </h2>
             </>
         )
-    } else if (type == 'h3') {
+    } else if (type === 'h3') {
         text = (
             <>
                 <h3
@@ -230,7 +230,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </h3>
             </>
         )
-    } else if (type == 'h4') {
+    } else if (type === 'h4') {
         text = (
             <>
                 <h4
@@ -243,7 +243,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </h4>
             </>
         )
-    } else if (type == 'h5') {
+    } else if (type === 'h5') {
         text = (
             <>
                 <h5
@@ -256,7 +256,7 @@ export const getTextByType  = (attributes, type, value) => {
                 </h5>
             </>
         )
-    } else if (type == 'h6') {
+    } else if (type === 'h6') {
         text = (
             <>
                 <h6

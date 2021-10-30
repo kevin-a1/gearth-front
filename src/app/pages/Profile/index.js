@@ -10,14 +10,14 @@ const Profile = props => {
     const {data} = useLogin();
     const {person} = data;
 
-    const [user, setUser] = useState(data);
-    const [persona, setPersona] = useState(person);
+    const [user] = useState(data);
+    const [persona] = useState(person);
     const photo = "https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg";
     return (
         <>
             <div className="center">
                 <div className="card p-d-inline-flex rounded p-shadow-20">
-                    <input type="image" src={ photo } className="img-profile" />
+                    <input type="image" src={ photo } className="img-profile" alt="profile"/>
                 </div>
             </div>
             <div className="card p-grid">

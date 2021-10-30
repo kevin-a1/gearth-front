@@ -35,7 +35,7 @@ const ComplexSystem = () => {
 
             console.log(modelsFilters);
 
-            if (dropdownValue == 'm') {
+            if (dropdownValue === 'm') {
 
                 let data = []
 
@@ -47,7 +47,7 @@ const ComplexSystem = () => {
                 }
                 setAutoValue( data );
 
-            } else if (dropdownValue == 'p') {
+            } else if (dropdownValue === 'p') {
 
                 let data = []
 
@@ -63,7 +63,7 @@ const ComplexSystem = () => {
                 }
                 setAutoValue( data );
 
-            } else if (dropdownValue == 'a') {
+            } else if (dropdownValue === 'a') {
 
                 let data = []
 
@@ -159,12 +159,12 @@ const ComplexSystem = () => {
                             if (selectedAutoValue) {
                                 for (const value of selectedAutoValue) {
 
-                                    if (model?.name == value?.name) {
+                                    if (model?.name === value?.name) {
                                         rowData[model?.id] = true;
                                         if (!data.includes(model)) data.push(model);
                                     }
                                     
-                                    if (process?.name == value?.name || activity?.name == value?.name) {
+                                    if (process?.name === value?.name || activity?.name === value?.name) {
                                         rowData[model?.id] = true;
                                         rowSubData[process?.id] = true;
                                         if (!data.includes(model)) data.push(model);
@@ -194,7 +194,7 @@ const ComplexSystem = () => {
 
     const statusBodyTemplate = (data) => {
 
-        const status = (data.status || data.status == 1) ? 'instock' : 'outofstock';
+        const status = (data.status || data.status === 1) ? 'instock' : 'outofstock';
         const statusValue = (data.status) ? 'Active' : 'Inactive';
 
         return (
@@ -269,7 +269,7 @@ const ComplexSystem = () => {
 
         const handleButton = () => {
             history.push({
-                pathname: '/admin/add-processes',
+                pathname: '/admin/add-process',
                 state: {
                     model: data, 
                 },

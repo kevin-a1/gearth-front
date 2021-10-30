@@ -14,6 +14,11 @@ import * as tableTemplates from './utils/templates/tableTemplates';
 
 const Roles = () => {
 
+    const emptyRole = {
+        id: 0,
+        name: '',
+        status: 1,
+    }
     const [ roles, setRoles ] = useState(null);
     const [ role, setRole ] = useState(emptyRole);
     const [ selectedRoles, setSelectedRoles ] = useState(null);
@@ -27,11 +32,7 @@ const Roles = () => {
     const toast = useRef(null);
     const dt = useRef(null);
 
-    const emptyRole = {
-        id: 0,
-        name: '',
-        status: 1,
-    }
+
 
     const loadData = async () => {
         setRoles(await getRoles(user?.access_token))
@@ -39,7 +40,7 @@ const Roles = () => {
 
     useEffect(() => {
         loadData();
-    }, []);
+    });
 
     const openNew = () => {
         setRole(emptyRole);
@@ -184,7 +185,7 @@ const Roles = () => {
     const header = (
         <div className="table-header">
             <h2 className="p-m-0">
-                <a>Roles</a>
+                <p>Roles</p>
             </h2>
             <i>{ (selectedRoles && selectedRoles.length > 0) && `Selected (${selectedRoles.length})` }</i>
             <span className="p-input-icon-left">

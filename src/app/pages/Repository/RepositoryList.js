@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { modelos } from '../../../api/data';
-import { Rating } from 'primereact/rating';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -41,8 +40,9 @@ const RepositoryList = () =>{
   const clasificador =(m)=>{
     let arr=[];
     m.map((d)=>{
-      const { category } = d
-      arr.push(category)
+      const { category } = d;
+      arr.push(category);
+      return arr;
     })
     arr = arr.filter((item,index)=>{
       return arr.indexOf(item) === index;

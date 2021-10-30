@@ -36,6 +36,7 @@ export const urlCheckTeamAvailability = 'teams/team-available';
 
 /* Models URLs */
 export const urlListModelsByTeam = 'models/list/team/';
+export const urlListVariables = 'models/list-variables/';
 
 /* Roles URLs */
 export const urlListRoles = 'roles/list';
@@ -45,11 +46,34 @@ export const urlListRolesById = 'roles/list/';
 export const urlListTools = 'toolbox/list';
 export const urlListDistinctTools = 'toolbox/list-distinct';
 export const urlCreateTool = 'toolbox/create';
+export const urlCreateToolTheory = 'toolbox/create-theory';
+export const urlCreateToolMethod = 'toolbox/create-method';
+export const urlCreateToolUse = 'toolbox/create-use';
+export const urlCreateToolChanges = 'toolbox/create-changes';
 export const urlCreateComplementaryTool = 'toolbox/create-complementaries'
 
 /*Surveys*/
 export const urlListSurveysByProcess = 'surveys-api/get/process/';
+export const urlListSurveysByActivity = 'surveys-api/get/activity/';
 export const urlCreateSurvey = 'surveys-api/create';
 export const urlUpdateSurvey = 'surveys-api/update/';
 export const urlGetSurveyById = 'surveys-api/get/';
 export const urlDeleteSurvey = 'surveys-api/delete/';
+
+/* Moments-Models URLs */
+export const urlListMomentsModelByMoment = 'moments-model/list-all-info/';
+
+/* Processes URLs */
+export const urlGetProcessById = 'process/list/';
+export const urlUpdateProcessXML = 'process/update-xml-body';
+
+/* Activities URLs */
+export const urlCreateActivity = 'activity/create';
+export const utlGetActivityByProcess = 'activity/list/by_process/';
+export const urlDeleteActivity = 'activity/delete/';
+export const urlUpdateActivity = 'activity/update/';
+export const urlUpdateActivityType = 'activity/update-type/';
+export const urlGetActivityByTask = 'activity/list/by-task/';
+export const urlDeleteActivityByTask = 'activity/delete-by-task/';
+export const urlUpdateActivityByTask = 'activity/update-by-task/';
+export const urlUpdateActivityTypeByTask = 'activity/update-type-by-task/';

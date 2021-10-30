@@ -6,7 +6,9 @@ const useQueryParams = () => {
   const location = useLocation();
 
   const params = useMemo(() => {
+    
     const qParams = queryString.parse(location.search);
+    console.log(qParams)
     return qParams;
   }, [location.search]);
 

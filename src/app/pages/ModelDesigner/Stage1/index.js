@@ -1,25 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Steps } from "primereact/steps";
 import { Button } from "primereact/button";
 import { Toolbar } from "primereact/toolbar";
-import { InputText } from "primereact/inputtext";
-import { AutoComplete } from "primereact/autocomplete";
-import { InputTextarea } from "primereact/inputtextarea";
+
 import { findAllPeople } from "../../../../api/data";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Calendar } from "primereact/calendar";
+
 import useForm from "../../../../hooks/useForm";
-import classNames from "classnames";
-import { values } from "lodash";
-import { FileUpload } from "primereact/fileupload";
-import { Dropdown } from "primereact/dropdown";
+
 import InfoTemplate from "./InfoTemplate";
 import PrinciplesTemplate from "./PrinciplesTemplate";
 import PurposeTemplate from "./PurposeTemplate";
 import ScopeTemplate from "./ScopeTemplate";
-import { BreadCrumb } from "primereact/breadcrumb";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { Messages } from "primereact/messages";
@@ -65,19 +58,7 @@ const Stage1 = () => {
     message.current.show({ severity: status, content: content });
   };
 
-  const fileUploadHandler = ({ files }) => {
-    const [file] = files;
-    console.log(file);
-    const fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      uploadFile(file);
-    };
-    fileReader.readAsDataURL(file);
-  };
-  const uploadFile = async (invoiceFile) => {
-    let formData = new FormData();
-    formData.append("file_obj", invoiceFile);
-  };
+ 
 
   useEffect(() => {
     let data = [];

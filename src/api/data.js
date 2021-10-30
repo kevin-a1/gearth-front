@@ -1993,3 +1993,80 @@ export const territorialSystemModels = [
         description: "Some description 4"
     }
 ];
+
+
+const MODEL_DATA_FOR_TESTING = { //Only estructure and data reference
+    "name": "Test Model",
+    "description": "This model was created for testing",
+    "long_description": "The test model aims to test: processes, forms, surveys and social.",
+    "user_id": 3,
+    "price": 100.0,
+    "image": "https://pngimage.net/wp-content/uploads/2018/06/test-icon-png-7.png",
+    "category_id": 1,
+    "team_id": 4,
+    "hashtag": "Test",
+    "id": 194,
+    "thumbnail": null,
+    "status": 1,
+    "code": "m_194",
+    "user": {
+        "username": "Andr3s",
+        "id": 3,
+        "status": 1,
+        "person": {
+            "names": "Freddy Andrés",
+            "last_names": "Sapatanga Quituizaca",
+            "identification": "0150305183",
+            "gender": "M",
+            "id": 4,
+            "status": true,
+            "created_at": "2021-08-19T05:03:36.788908+00:00",
+            "updated_at": "2021-08-19T05:03:36.788908+00:00"
+        },
+        "team": {
+            "name": "GEArth Developers",
+            "description": null,
+            "logo": null,
+            "id": 4,
+            "status": 1,
+            "plan_id": 1,
+            "created_at": "2021-08-19T05:03:36.783727+00:00",
+            "updated_at": "2021-08-19T05:03:36.783727+00:00",
+            "plan": {
+                "name": "Plan básico",
+                "description": "Plan gratuito para realizar pruebas",
+                "team_members_nos": 5,
+                "model_nos": 2,
+                "team_app_nos": 6,
+                "web_storage": 1,
+                "social_app_storage": 1,
+                "neo4j_nodes_no": 60,
+                "neo4_relationships_no": 210,
+                "firebase_storage_time": 1,
+                "price": 0.0,
+                "featured": true,
+                "discount": 0.0,
+                "id": 1,
+                "status": 1,
+                "created_at": null,
+                "updated_at": null
+            }
+        },
+        "role": {
+            "name": "Super Administrador",
+            "description": "Rol con todos los privilegios",
+            "id": 1,
+            "status": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        "created_at": "2021-08-19T05:03:36.791635+00:00",
+        "updated_at": "2021-08-19T05:03:36.791635+00:00"
+    },
+    "stage1": false,
+    "stage2": false,
+    "stage3": false,
+    "stage4": false,
+    "created_at": "2021-10-21T22:08:42.568294+00:00",
+    "updated_at": "2021-10-21T22:08:42.568294+00:00"
+}

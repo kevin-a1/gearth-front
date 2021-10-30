@@ -23,11 +23,13 @@ const Polls = () => {
     const dispatch = useDispatch();
     let history = useHistory();
     const location = useLocation();
-    const user = useSelector((state) => state.LoginState.data);
+    const user = useSelector((state) => state.LoginState?.data);
+    const model = useSelector((state) => state.ModelState?.model);
 
-    if (!location.state?.process) history.push('/admin/processes');
+    if (!location.state?.process || !location.state?.activity) history.push('/admin/processes');
 
     const process = location.state?.process; //Process of the activity
+    const activity = location.state?.activity; //Process of the activity
 
     const [ open, setOpen ] = useState(false);
 
@@ -35,6 +37,7 @@ const Polls = () => {
     const [ pollDescription, setPollDescription ] = useState("");
     const [ emptyT, setEmptyT ] = useState(false);
     const [ emptyD, setEmptyD ] = useState(false);
+    const [ actualizar, setActualizar ] = useState(false);
 
     const toast = useRef(null);
 
@@ -56,7 +59,7 @@ const Polls = () => {
         if (survey.description !=='') {
           setEmptyD(false);
           const status = await dispatch(
-            surveyActions.createSurvey(survey, process.id, user.access_token)
+            surveyActions.createSurvey(survey, process?.id, activity?.id, model?.id, user?.access_token )
           );
 
           if (status !== 201) {
@@ -64,6 +67,7 @@ const Polls = () => {
             return;
           }else {
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Survey Created!', life: 3000 });
+            setActualizar(true);
             setOpen(false);
             setPollTitle("");
             setPollDescription("");
@@ -133,14 +137,14 @@ const Polls = () => {
                           onChange={(e) =>{setPollDescription(e.target.value)}} />
                           <br></br>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions> 
                       <Button label='Cancel' className="p-button-text p-mr-2 p-mb-2" onClick={cancelAddPoll} />
                       <Button label='Create' className="p-button-text p-mr-2 p-mb-2" onClick={createPoll} />
                     </DialogActions>
                   </Dialog>
                 </div>
                 <div className='list-demo'>
-                  <Poll processId={process.id}/>
+                  <Poll processId={process.id} a={actualizar}/>
                 </div>
               </div>
             </div>

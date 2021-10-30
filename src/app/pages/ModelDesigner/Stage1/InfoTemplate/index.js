@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { Steps } from "primereact/steps";
-import { Button } from "primereact/button";
-import { Toolbar } from "primereact/toolbar";
-import { InputText } from "primereact/inputtext";
-import { AutoComplete } from "primereact/autocomplete";
+import React, { useState } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
-import { findAllPeople } from "../../../../../api/data";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Calendar } from "primereact/calendar";
-import useForm from "../../../../../hooks/useForm";
+import { InputText } from "primereact/inputtext";
 import classNames from "classnames";
-import { values } from "lodash";
+
 import { FileUpload } from "primereact/fileupload";
 import { Dropdown } from "primereact/dropdown";
 
 const InfoTemplate = (props) => {
-  const {categoryId, values, setCategoryId, handleInputChange } = props;
+  const { values, handleInputChange } = props;
 
   const dropdownItems = [
     { name: "Socio Cultural", code: 1 },
@@ -103,7 +94,7 @@ const InfoTemplate = (props) => {
             autoFocus
             className={classNames({ "p-invalid": submitted && !process?.name })}
             placeholder="Ingrese el nombre del MIT..."
-            autoComplete={false}
+            autoComplete="off"
           />
 
           {submitted && !process?.name && (
@@ -125,7 +116,7 @@ const InfoTemplate = (props) => {
             autoFocus
             className={classNames({ "p-invalid": submitted && !process?.name })}
             placeholder="Ingrese un valor Ej: 10.00 ..."
-            autoComplete={false}
+            autoComplete="off"
           />
 
           {submitted && !process?.name && (

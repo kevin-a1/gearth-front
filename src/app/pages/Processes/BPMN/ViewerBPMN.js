@@ -4,11 +4,13 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Button } from 'primereact/button';
 import { SplitButton } from "primereact/splitbutton";
 import { ToggleButton } from "primereact/togglebutton";
-import { _saveXML } from './utils/helpers';
-import { eventsBpmn, PIZZA_EXAMPLE } from './utils/variables';
+import { importXML, _saveXML } from './utils/helpers';
+import { BLANK_XML, PIZZA_EXAMPLE } from './utils/variables';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import '../../../assets/scss/BPMN-JS.scss';
+import { getProcessById } from "../../../../redux/actions/process.actions";
+import { useSelector } from "react-redux";
 
 const ViewerBPMN = () => {
 
@@ -17,25 +19,25 @@ const ViewerBPMN = () => {
     
     if (!location.state?.process) history.push('/admin/processes');
 
-    const process = location.state.process;
-    const xml = location.state?.xml;
+    const process = location.state?.process;
 
     return (
         <>
             <h2 style={{ textAlign: 'center' }}>
                 View activities of <i><a>"{process?.name}"</a></i>
             </h2>
-            { BPMNModeler(history, process, xml) }
+            { BPMNModeler(history, process) }
         </>
     )
 }
 
-const BPMNModeler = (history, process, xml) => {
+const BPMNModeler = (history, process) => {
 
     const [ theme, setTheme ] = useState(true);
     const [ defaultFillColor, setDefaultFillColor ] = useState('#FFF');
     const [ defaultStrokeColor, setDefaultStrokeColor ] = useState('#000');
-    const [ diagram ] = useState( PIZZA_EXAMPLE );
+    const [ diagram, setDiagram ] = useState( PIZZA_EXAMPLE );
+    const user = useSelector((state) => state.LoginState.data);
 
     const menuItems = [
         {
@@ -100,30 +102,17 @@ const BPMNModeler = (history, process, xml) => {
             ...modelerValues
         });
     
-        if (diagram.length > 0) {
-    
-            modeler.importXML(diagram).then(({ warnings }) => {
-    
-                if (warnings.length) console.log("Warnings", warnings);
-    
-                const canvas = modeler.get("canvas");
-                canvas.zoom("fit-viewport", 'auto');
-    
-            }).catch((err) => {
-                console.log("error", err); 
-            });
-    
-            const eventBus = modeler.get('eventBus');
-    
-            eventsBpmn.forEach(function(event) {
-                eventBus.on(event, function(e) {
-                    if (event == 'element.contextmenu') {
-                        return false;
-                    }
-                });
-            });
-        }
+        getProcessById(process?.id, user?.access_token).then((data) => {
+
+            if (data?.xml_body) { 
+                importXML(setDiagram, modeler, data?.xml_body); //Import xml for data base of activity
+            } else { 
+                importXML(setDiagram, modeler, BLANK_XML); //Import blank xml if activity haven't xml created
+            }
+        })
+
         return modeler;
+
     }, [ theme ])
 
     const optionsTemplate = () => {
@@ -172,12 +161,9 @@ const BPMNModeler = (history, process, xml) => {
                 className="p-shadow-10 p-p-2"
                 id="container"
                 style={{
-                    border: `1px solid ${(theme) ? '#585858' : '#gray'}`,
-                    width: "90vw",
                     height: "95vh",
-                    margin: "auto",
                     background: `${(theme ? '#eee' : '#293241' )}`,
-                    borderRadius: '17px',
+                    borderRadius: '10px',
                     color: '#000',
                 }}
             ></div>

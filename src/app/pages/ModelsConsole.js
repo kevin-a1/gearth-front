@@ -6,28 +6,25 @@ import {useHistory} from 'react-router-dom';
 import {Dialog} from 'primereact/dialog';
 import {Toast} from 'primereact/toast';
 import {InputText} from "primereact/inputtext";
-import {InputTextarea} from "primereact/inputtextarea";
-import {Messages} from "primereact/messages";
-import {DataView} from 'primereact/dataview';
+
 import {Button} from 'primereact/button';
-import {Dropdown} from 'primereact/dropdown';
+
 // Custom UI imports
 import Spinner from "../components/UI/spinner/Spinner";
 // Redux, actions imports
 import * as graphModelizerActions from "../../redux/actions/graph-modelizer.actions";
-import { MegaMenu } from 'primereact/megamenu';
+
 import { Menu } from 'primereact/menu';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FileUpload } from 'primereact/fileupload';
 import { AutoComplete } from 'primereact/autocomplete';
 import { InputSwitch } from 'primereact/inputswitch';
-import { findAllPlans, findAllTeams, findPlanById } from '../../api/data';
+
 import classNames from 'classnames';
 import { Toolbar } from 'primereact/toolbar';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Menubar } from 'primereact/menubar';
-import {TabMenu} from "primereact/tabmenu";
+
 
 import {getModel as getGraphModelizer, resetModelStore as resetGraphModelizerStore} from '../../redux/actions/graph-modelizer.actions';
 import * as actionsGraphModelizer from "../../redux/actions/graph-modelizer.actions";
@@ -40,7 +37,7 @@ import { setModelState as setModelStore} from "../../redux/actions/model.actions
 
 
 
-const ModelsConsole = (props) => {
+const ModelsConsole = () => {
     const dispatch = useDispatch();
 
 
@@ -65,11 +62,9 @@ const ModelsConsole = (props) => {
         // Need to manage state of error.
     }
 
-    const [tabSelected, setTabSelected] = useState(wizardItems[0]);
+    const [ setTabSelected] = useState(wizardItems[0]);
 
-    const tabChangeHandler = (tab) => {
-        setTabSelected(tab);
-    }
+
         // Resetting store because it can contains info of a model previously visited.
     resetGraphModelizerStore()
 
@@ -86,10 +81,10 @@ const ModelsConsole = (props) => {
     const [teamDialog, setTeamDialog] = useState(false);
     const [selectedAutoValue, setSelectedAutoValue] = useState(null);
     const [deleteTeamDialog, setDeleteTeamDialog] = useState(false);
-    const [deleteTeamsDialog, setDeleteTeamsDialog] = useState(false);
+    const [setDeleteTeamsDialog] = useState(false);
     const [teams, setTeams] = useState(null);
     const [autoFilteredValue, setAutoFilteredValue] = useState([]);
-    const [autoValue, setAutoValue] = useState(null);
+    const [autoValue] = useState(null);
 
     const emptyModel = {
         id: null,
@@ -103,22 +98,17 @@ const ModelsConsole = (props) => {
 
     // UI STATES, VARIABLE AND FUNCTIONS
     // const [layout, setLayout] = useState('list');   // uncomment if grid layout is need it
-    const [sortOrder, setSortOrder] = useState(null);
-    const [sortField, setSortField] = useState(null);
-    const [sortKey, setSortKey] = useState(null);
-    const sortOptions = [
-        {label: 'Name by A-Z', value: 'name'},
-        {label: 'Name by Z-A', value: '!name'},
-        {label: 'Description by A-Z', value: 'description'},
-        {label: 'Description by A-Z', value: '!description'},
-    ];
+    const [setSortOrder] = useState(null);
+    const [ setSortField] = useState(null);
+    const [ setSortKey] = useState(null);
+
     // for displaying messages of error or success
     const message = useRef();
     const message2 = useRef();
 
     const toast = useRef(null);
-    const [displayConfirmation, setDisplayConfirmation] = useState(false);
-    const [displayBasic, setDisplayBasic] = useState(false);
+    const [ setDisplayConfirmation] = useState(false);
+    const [ setDisplayBasic] = useState(false);
     // I work with two states for displaying which input is missing
     const addInfoMessageName = () => {
         message?.current?.show({severity: 'error', content: 'Required.'});

@@ -1,9 +1,5 @@
 import React, {useState} from 'react';
-import {Sidebar} from "primereact/sidebar";
-import {InputText} from "primereact/inputtext";
-import {Editor} from "primereact/editor";
-import {InputTextarea} from "primereact/inputtextarea";
-import classNames from "classnames";
+
 import {TabMenu} from "primereact/tabmenu";
 import ChannelsList from "./ChannelsList";
 import AppUsers from "./AppUsers";
@@ -14,7 +10,7 @@ const wizardItems = [
     {id: 2, label: 'Conversations Overview', icon: 'pi pi-eye'},
 ];
 
-const SocialNetwork = props => {
+const SocialNetwork = () => {
 
     const [tabSelected, setTabSelected] = useState(wizardItems[0]);
 
@@ -28,7 +24,7 @@ const SocialNetwork = props => {
 
             <div className="p-col-12 p-md-12">
                 <div className="card card-w-title">
-                    <h5>Consola de Redes de pares progresistas</h5>
+                    <h5>Consola de Redes de pares</h5>
                     <TabMenu model={wizardItems} onTabChange={(e) => {
                         tabChangeHandler(e.value)
                     }} activeItem={tabSelected}/>

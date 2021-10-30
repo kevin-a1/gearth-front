@@ -1,7 +1,8 @@
 import {useDispatch,useSelector} from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
-import { createTool,getTools,getToolById,getToolsDistinct,createComplementaryTool } from '../actions/toolbox.action';
+import { createTool,getTools,getToolById,getToolsDistinct,createComplementaryTool
+    ,createToolAditionalData,cleanTool } from '../actions/toolbox.action';
 
 export const useToolbox = () =>{
     const history = useHistory();
@@ -23,6 +24,12 @@ export const useToolbox = () =>{
     const getDistinctTool = (tool_id) =>{
         dispatch(getToolsDistinct(history,tool_id));
     }
+    const insertToolData = (data) =>{
+        dispatch(createToolAditionalData(data));
+    }
+    const removeTool = () =>{
+        dispatch(cleanTool());
+    }
 
 
     return {
@@ -32,6 +39,8 @@ export const useToolbox = () =>{
         insertComplementaryTool,
         getCurrentTool,
         getDistinctTool,
+        insertToolData,
+        removeTool,
         toolboxData: state?.data,
         currentTool:state?.dataCurrent,
         distinctTool:state?.dataDistinct,

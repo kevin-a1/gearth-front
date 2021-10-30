@@ -38,7 +38,9 @@ import { TextDemo } from "../utilities/TextDemo";
 import { TypographyDemo } from "../utilities/TypographyDemo";
 import { Widgets } from "../utilities/Widgets";
 import { useLogin } from '../../redux/hooks/useUser';
+import { Repository } from "../pages/Repository";
 import { useHistory } from 'react-router-dom';
+import { FormIO } from "../micro-frontends/FormApp";
 import Roles from "../pages/Roles";
 import Teams from "../pages/Teams";
 import PaymentMethods from "../pages/PaymentMethods";
@@ -51,18 +53,20 @@ import SignUp from "../pages/SignUp";
 import GraphModelizer from "../pages/GraphModelizer";
 import ModelsConsole from "../pages/ModelsConsole";
 import Profile from "../pages/Profile";
-import { Repository } from "../pages/Repository";
-import AddActivity from "../pages/Processes/AddActivity/AddActivity";
-import ViewerBPMN from "../pages/Processes/AddActivity/ViewerBPMN";
-import BuildForm from "../pages/Processes/AddActivity/BuildForm";
+import BuilderBPMN from "../pages/Processes/BPMN/BuilderBPMN";
+import ViewerBPMN from "../pages/Processes/BPMN/ViewerBPMN";
 import RepositoryList from "../pages/Repository/RepositoryList";
-import RenderFormSchema from "../pages/Processes/AddActivity/RenderFormSchema";
 import ModelDesigner from "../pages/ModelDesigner";
 import Moments from "../pages/ModelDesigner/Stage2/Moments/index";
 import SocialNetwork from "../pages/ModelDesigner/SocialNetwork/SocialNetwork";
-import ComplexSystem from "../pages/TerritorialSystem/ComplexSystem";
+import ComplexSystem from "../pages/Core/ComplexSystem";
+import KnowledgeBase from "../pages/Core/KnowledgeBase";
+import Toolbox from "../pages/Core/Toolbox";
 import Polls from "../pages/Polls";
 import EditPoll from "../pages/Polls/Poll/EditPoll";
+import NewTool from "../pages/Core/Toolbox/NewTool";
+import NewItem from "../pages/Core/KnowledgeBase/NewItem";
+import ViewTool from "../pages/Core/Toolbox/ViewTool";
 
 
 const Routes = ({colorScheme, Help}) =>{
@@ -129,31 +133,34 @@ const Routes = ({colorScheme, Help}) =>{
                     <Route path="/creators/moments" component={Moments}/>
                     <Route path="/profile" component={Profile} />
                     <Route path="/admin/renders-test" component={ RendersTest } />
-
                     <Route path="/admin/model-designer" component={ ModelDesigner } />
-
                     <Route path="/admin/repositories" component={ RepositoryList } />
                     <Route path="/admin/repository" component={ Repository } />
                     <Route path="/singup" component={ SignUp } />
-
                     {/* Territorial System routes */}
-                    <Route path="/territorial-system/complex-system" component={ ComplexSystem } />
-
-
+                    <Route path="/core/complex-system" component={ ComplexSystem } />
+                    <Route path="/core/knowledge" exact component={ KnowledgeBase } />
+                    <Route path="/core/knowledge/new" component={ NewItem } />
+                    <Route path="/core/toolbox" exact component={ Toolbox } />
+                    <Route path="/core/toolbox/tools" component={ NewTool } />
+                    <Route path="/core/toolbox/view" component={ ViewTool } />
                     {/* Process routes */}
                     <Route path="/admin/processes" component={ Processes } />
-                    <Route path="/admin/add-processes" component={ AddProcess } />
-                    <Route path="/admin/add-activity" component={ AddActivity } />
-                    <Route path="/admin/view-activity" component={ ViewerBPMN } />
-                    <Route path="/admin/build-form" component={ BuildForm } />
-                    <Route path="/admin/render-form-schema" component={ RenderFormSchema } />
-
+                    <Route path="/admin/add-process" component={ AddProcess } />
+                    <Route path="/bpmn/builder" component={ BuilderBPMN } />
+                    <Route path="/bpmn/viewer" component={ ViewerBPMN } />
                     {/* Social Network routes */}
                     <Route path="/admin/social-network" component={ SocialNetwork } />
+
+                    {/* Microfronted: FormIO Routes */}
+                    <Route exact path="/form/builder" component={ FormIO } />
+                    <Route exact path="/form/editer" component={ FormIO } />
+                    <Route exact path="/form/viewer" component={ FormIO } />
 
                     {/* Polls routes*/}
                     <Route path="/admin/surveys" component={Polls}/>
                     <Route path="/admin/survey/edit" component={EditPoll}/>
+
         </React.Fragment>
     );
 };
